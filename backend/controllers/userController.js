@@ -55,3 +55,19 @@ export const loginUser = async (req, res) => {
     res.status(500).send({ message: "Server error" });
   }
 };
+
+//Delete user by ID
+export const deleteUser = async (req, res) => {
+  try {
+    const userId = req.params.id;
+    const user = await UserModel.findByIdAndDelete(userId);
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    res.status(200).json({ message: "User was deleted successfully" });
+  } catch (error) {
+    console.error("Error while deleting user", error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
