@@ -31,7 +31,7 @@ export const createUser = async (req, res) => {
   }
 };
 
-// Get specific user with email
+// Login with user
 export const loginUser = async (req, res) => {
   try {
     const user = await UserModel.findOne({ email: req.body.email });
@@ -41,7 +41,12 @@ export const loginUser = async (req, res) => {
     }
 
     if (await bcrypt.compare(req.body.password, user.hashed_password)) {
-      return res.status(200).json(user.id);
+      return res.status(200).json({
+        userId: user.id,
+        email: user.email,
+        username: user.username,
+        total_points: user.total_points,
+      });
     } else {
       res.status(401).send({ message: "Wrong password" });
     }
