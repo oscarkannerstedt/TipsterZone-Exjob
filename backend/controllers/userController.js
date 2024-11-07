@@ -71,3 +71,29 @@ export const deleteUser = async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 };
+
+//Update user information
+export const updateUser = async (req, res) => {
+  try {
+    const userId = req.params.id;
+    const { username, email, password } = req.body;
+
+    const updateData = { username, email };
+
+    if (password) {
+      updateData.hashed_password = await bcrypt.hash(password, 10);
+    }
+
+    const user = await UserModel.findByIdAndUpdate(userId, updateData, {
+      new: true,
+    });
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    res.status(200).json(user);
+  } catch (error) {
+    console.error("Error while updating user", error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
