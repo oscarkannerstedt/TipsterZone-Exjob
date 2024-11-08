@@ -4,7 +4,7 @@ import MatchModel from "../models/matchModel.js";
 const fetchMatchFromAPI = async (match_id) => {
   // Mockfunktion för att simulera API-hämtning av match
   const mockMatchData = {
-    match_id: "1234567890abcdef", // match_id ska matcha den du testar med
+    match_id: "1234567890abcdef",
     team_home: "Team A",
     team_away: "Team B",
     match_date: new Date(),
@@ -13,10 +13,10 @@ const fetchMatchFromAPI = async (match_id) => {
     competition: "Premier League",
   };
 
-  // Simulera en API-hämtning genom att returnera mockad matchdata
   return mockMatchData;
 };
 
+//Create a prediction
 export const createPrediction = async (req, res) => {
   try {
     const { user_id, match_id, predicted_outcome, summary } = req.body;
@@ -62,5 +62,28 @@ export const createPrediction = async (req, res) => {
   } catch (error) {
     console.error("Error while creating prediction", error);
     res.status(500).json({ message: "Server error" });
+  }
+};
+
+//Update existing prediction
+export const updatePrediction = async (req, res) => {
+  try {
+    const { predictionId } = req.params;
+    const updatedData = req.body;
+
+    const updatedPrediction = await PredictionModel.findByIdAndUpdate(
+      predictionId,
+      updatedData,
+      { new: true }
+    );
+
+    if (!updatedPrediction) {
+      return res.statu(404).json({ message: "Prediction not found" });
+    }
+
+    res.json(updatedPrediction);
+  } catch (error) {
+    console.error("Error while update prediction");
+    res.status(500).json({ message: "Failed to update prediction" });
   }
 };
