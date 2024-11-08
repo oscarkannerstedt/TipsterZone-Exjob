@@ -87,3 +87,23 @@ export const updatePrediction = async (req, res) => {
     res.status(500).json({ message: "Failed to update prediction" });
   }
 };
+
+//Delete a prediction by ID
+export const deletePrediction = async (req, res) => {
+  try {
+    const { predictionId } = req.params;
+
+    const deletedPrediction = await PredictionModel.findByIdAndDelete(
+      predictionId
+    );
+
+    if (!deletedPrediction) {
+      res.status(404).json({ message: "Prediction not found" });
+    }
+
+    res.status(200).json({ message: "Prediction deleted succesffully" });
+  } catch (error) {
+    console.error("Error while deleting prediction");
+    res.status(500).json({ message: "Failed to delete prediction" });
+  }
+};
