@@ -6,7 +6,7 @@ const matchSchema = new mongoose.Schema({
   team_away: { type: String, required: true },
   match_date: { type: Date, required: true },
   status: { type: String, required: true },
-  result: { result: String },
+  result: { type: String },
   competition: { type: String, required: true },
 });
 

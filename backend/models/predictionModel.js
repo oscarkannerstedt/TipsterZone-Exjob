@@ -7,8 +7,7 @@ const predictionSchema = new mongoose.Schema({
     required: true,
   },
   match_id: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Match",
+    type: String,
     required: true,
   },
   predicted_outcome: { type: String, required: true },
