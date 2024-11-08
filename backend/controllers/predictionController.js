@@ -107,3 +107,23 @@ export const deletePrediction = async (req, res) => {
     res.status(500).json({ message: "Failed to delete prediction" });
   }
 };
+
+//Get all predictions from specifik user by userId
+export const getPredictionsByUserId = async (req, res) => {
+  try {
+    const { userId } = req.params;
+
+    const predictions = await PredictionModel.find({ user_id: userId });
+
+    if (!predictions || predictions.length === 0) {
+      return res
+        .status(404)
+        .json({ message: "No predictions found for this user" });
+    }
+
+    res.json(predictions);
+  } catch (error) {
+    console.error("Error while get all predictions by userId", error);
+    res.status(500).json({ message: "Failed to fetch predictions" });
+  }
+};
