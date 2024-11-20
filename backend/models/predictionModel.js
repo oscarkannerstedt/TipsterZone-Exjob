@@ -18,6 +18,7 @@ const predictionSchema = new mongoose.Schema({
   points_awarded: { type: Number, default: 0 },
   summary: { type: String },
   created_at: { type: Date, default: Date.now },
+  processed: { type: Boolean, default: false },
 });
 
 export default mongoose.model("Prediction", predictionSchema);

@@ -93,4 +93,8 @@ export const updateMatchResultsAndPredicitons = async () => {
   }
 };
 
-export default fetchAllMatches;
+export default {
+  fetchAllMatches,
+  fetchMatchResultFromApi,
+  updateMatchResultsAndPredicitons,
+};
