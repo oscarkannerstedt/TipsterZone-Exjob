@@ -127,3 +127,42 @@ export const getPredictionsByUserId = async (req, res) => {
     res.status(500).json({ message: "Failed to fetch predictions" });
   }
 };
+
+// Update user predicitons when match is finished
+const processUserPredictions = async () => {
+  try {
+    const predicitons = await PredictionModel.find({
+      match_id: match.match_id,
+    });
+
+    for (const prediciton of predicitons) {
+      let points = 0;
+
+      const [homeScore, awayScore] = match.result.split("-").map(Number);
+      let actualOutcome;
+
+      if (homeScore > awayScore) {
+        actualOutcome = "1";
+      } else if (homeScore < awayScore) {
+        actualOutcome = "2";
+      } else {
+        actualOutcome = "X";
+      }
+
+      if (prediciton.predicted_outcome === actualOutcome) {
+        points = 3;
+      } else {
+        points = -1;
+      }
+
+      prediciton.points_awarded = points;
+      prediciton.processed = true;
+
+      await prediciton.save();
+    }
+  } catch (error) {
+    console.error("Error processing user predicitons", error);
+  }
+};
+
+export default processUserPredictions;

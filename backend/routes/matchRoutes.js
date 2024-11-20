@@ -1,8 +1,8 @@
 import express from "express";
-import fetchAllMatches from "../controllers/matchControllers.js";
+import matchControllers from "../controllers/matchControllers.js";
 
 const router = express.Router();
 
-router.get("/", fetchAllMatches);
+router.get("/", matchControllers.fetchAllMatches);
 
 export default router;

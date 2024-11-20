@@ -1,6 +1,7 @@
 import axios from "axios";
 import NodeCache from "node-cache";
 import matchModel from "../models/matchModel.js";
+import processUserPredictions from "./predictionController.js";
 
 const API_BASE_URL = "https://api.football-data.org/v4/";
 
