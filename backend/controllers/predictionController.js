@@ -160,6 +160,8 @@ const processUserPredictions = async () => {
 
       await prediciton.save();
     }
+
+    //Call function here to update users points for all users who predicted on match
   } catch (error) {
     console.error("Error processing user predicitons", error);
   }

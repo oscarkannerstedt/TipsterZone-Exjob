@@ -71,22 +71,28 @@ const fetchMatchResultFromApi = async (league) => {
   }
 };
 
+// More leagues should bee placed here later!!
+const leagues = "PL";
+
 export const updateMatchResultsAndPredicitons = async () => {
   try {
-    const league = "PL";
-    const finishedMatches = await fetchMatchResultFromApi(league);
+    for (const league of leagues) {
+      const finishedMatches = await fetchMatchResultFromApi(league);
 
-    for (const match of finishedMatches) {
-      const dbMatch = await matchModel.findOne({ match_id: match.id });
+      for (const match of finishedMatches) {
+        const dbMatch = await matchModel.findOne({ match_id: match.id });
 
-      if (dbMatch) {
-        dbMatch.status = match.status;
-        dbMatch.result = `${match.score.fullTime.homeTeam}-${match.score.fullTime.awayTeam}`;
-        await dbMatch.save();
+        if (dbMatch) {
+          dbMatch.status = match.status;
+          dbMatch.result = `${match.score.fullTime.homeTeam}-${match.score.fullTime.awayTeam}`;
+          await dbMatch.save();
 
-        console.log(`Match ${match.id} updated with result: ${dbMatch.result}`);
+          console.log(
+            `Match ${match.id} updated with result: ${dbMatch.result}`
+          );
 
-        await processUserPredictions(dbMatch);
+          await processUserPredictions(dbMatch);
+        }
       }
     }
   } catch (error) {
