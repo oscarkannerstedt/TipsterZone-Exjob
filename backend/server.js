@@ -5,6 +5,7 @@ import connectDB from "./config/database.js";
 import userRoutes from "./routes/userRoutes.js";
 import predictionRoutes from "./routes/predictionRoutes.js";
 import matchRoutes from "./routes/matchRoutes.js";
+import "./jobs/updateMatchResultsTasks.js";
 
 dotenv.config();
 
