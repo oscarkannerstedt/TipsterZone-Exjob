@@ -1,48 +1,55 @@
 import PredictionModel from "../models/predictionModel.js";
 import MatchModel from "../models/matchModel.js";
-
-const fetchMatchFromAPI = async (match_id) => {
-  // Mockfunktion för att simulera API-hämtning av match
-  const mockMatchData = {
-    match_id: "1234567890abcdef",
-    team_home: "Team A",
-    team_away: "Team B",
-    match_date: new Date(),
-    status: "Scheduled",
-    result: "TBD",
-    competition: "Premier League",
-  };
-
-  return mockMatchData;
-};
+import matchControllers from "./matchControllers.js";
 
 //Create a prediction
 export const createPrediction = async (req, res) => {
   try {
     const { user_id, match_id, predicted_outcome, summary } = req.body;
+    const { league } = req.query;
+
+    if (!league) {
+      return res.status(400).json({ message: "League code is required" });
+    }
 
     //Check if match is stored in database
     let match = await MatchModel.findOne({ match_id });
 
     //If match not found in database, get it from API & save it
     if (!match) {
-      // Create a function that get match from API
-      match = await fetchMatchFromAPI(match_id);
-      console.log("Fetched match from API: ", match);
+      const apiRequest = { query: { league } };
+      const apiResponse = {
+        status: () => ({
+          json: (data) => data,
+        }),
+      };
 
-      if (!match) {
-        return res.status(404).json({ message: "Match not found from API" });
+      const data = await matchControllers.fetchAllMatches(
+        apiRequest,
+        apiResponse
+      );
+
+      if (!data || !data.matches) {
+        return res.status(400).json({ message: "Matches not found from api" });
+      }
+
+      const foundMatch = data.matches.find((m) => m.id === parseInt(match_id));
+
+      if (!foundMatch) {
+        return res
+          .status(400)
+          .json({ message: "Match not found in API response" });
       }
 
       //Save match in database
       match = new MatchModel({
-        match_id: match.match_id,
-        team_home: match.team_home,
-        team_away: match.team_away,
-        match_date: match.match_date,
-        status: match.status,
-        result: match.result,
-        competition: match.competition,
+        match_id: foundMatch.id,
+        team_home: foundMatch.homeTeam.name,
+        team_away: foundMatch.awayTeam.name,
+        match_date: foundMatch.utcDate,
+        status: foundMatch.status,
+        result: foundMatch.status,
+        competition: foundMatch.competition.name,
       });
 
       await match.save();
@@ -57,8 +64,8 @@ export const createPrediction = async (req, res) => {
     });
 
     await prediction.save();
-    console.log("Prediction saved to database: ", prediction);
     res.status(200).json(prediction);
+    console.log("Prediction saved to database: ", prediction);
   } catch (error) {
     console.error("Error while creating prediction", error);
     res.status(500).json({ message: "Server error" });
@@ -127,3 +134,44 @@ export const getPredictionsByUserId = async (req, res) => {
     res.status(500).json({ message: "Failed to fetch predictions" });
   }
 };
+
+// Update user predicitons when match is finished
+const processUserPredictions = async () => {
+  try {
+    const predicitons = await PredictionModel.find({
+      match_id: match.match_id,
+    });
+
+    for (const prediciton of predicitons) {
+      let points = 0;
+
+      const [homeScore, awayScore] = match.result.split("-").map(Number);
+      let actualOutcome;
+
+      if (homeScore > awayScore) {
+        actualOutcome = "1";
+      } else if (homeScore < awayScore) {
+        actualOutcome = "2";
+      } else {
+        actualOutcome = "X";
+      }
+
+      if (prediciton.predicted_outcome === actualOutcome) {
+        points = 3;
+      } else {
+        points = -1;
+      }
+
+      prediciton.points_awarded = points;
+      prediciton.processed = true;
+
+      await prediciton.save();
+    }
+
+    //Call function here to update users points for all users who predicted on match
+  } catch (error) {
+    console.error("Error processing user predicitons", error);
+  }
+};
+
+export default processUserPredictions;
