@@ -1,6 +1,7 @@
 import PredictionModel from "../models/predictionModel.js";
 import MatchModel from "../models/matchModel.js";
 import matchControllers from "./matchControllers.js";
+import userModel from "../models/userModel.js";
 
 //Create a prediction
 export const createPrediction = async (req, res) => {
@@ -166,9 +167,14 @@ const processUserPredictions = async () => {
       prediciton.processed = true;
 
       await prediciton.save();
-    }
 
-    //Call function here to update users points for all users who predicted on match
+      //Update users total points when match is finished
+      const user = await userModel.findById(prediciton.user_id);
+      if (user) {
+        user.total_points += points;
+        await user.save();
+      }
+    }
   } catch (error) {
     console.error("Error processing user predicitons", error);
   }

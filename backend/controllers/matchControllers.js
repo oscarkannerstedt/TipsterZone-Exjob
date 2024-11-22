@@ -71,8 +71,7 @@ const fetchMatchResultFromApi = async (league) => {
   }
 };
 
-// More leagues should bee placed here later!!
-const leagues = "PL";
+const leagues = ["PL", "FL1", "ABL", "SA", "PD"];
 
 export const updateMatchResultsAndPredicitons = async () => {
   try {
