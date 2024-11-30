@@ -12,7 +12,7 @@ export const getLeaderboard = async (req, res) => {
 
     if (cacheLeaderboard) {
       console.log("Leaderboard from cache");
-      res.status(200).json(cacheLeaderboard);
+      return res.status(200).json(cacheLeaderboard);
     }
 
     const topUsers = await userModel
