@@ -46,4 +46,32 @@ describe("User endpoints", () => {
     expect(response.body).toHaveProperty("email", loginData.email);
     expect(response.body).toHaveProperty("username", createdUser.username);
   });
+
+  it("Should return 401 if password is incorrect", async () => {
+    const loginData = {
+      email: "testUser2@example.com",
+      password: "wrongPassword",
+    };
+
+    const response = await request(app)
+      .post("/api/users/login")
+      .send(loginData);
+
+    expect(response.statusCode).toBe(401);
+    expect(response.body.message).toBe("Wrong password");
+  });
+
+  it("Should return 401 if no user found", async () => {
+    const loginData = {
+      email: "noUserFound@example.com",
+      password: "password123",
+    };
+
+    const response = await request(app)
+      .post("/api/users/login")
+      .send(loginData);
+
+    expect(response.statusCode).toBe(401);
+    expect(response.body.message).toBe("No user found");
+  });
 }, 20000);
