@@ -7,8 +7,8 @@ const matchSchema = new mongoose.Schema({
   match_date: { type: Date, required: true },
   status: { type: String, required: true },
   result: {
-    home: { type: Number },
-    away: { type: Number },
+    home: { type: Number, required: false },
+    away: { type: Number, required: false },
   },
   competition: { type: String, required: true },
 });

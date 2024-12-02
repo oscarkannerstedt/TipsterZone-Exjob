@@ -49,6 +49,7 @@ const fetchAllMatches = async (req, res) => {
   }
 };
 
+// Its works to get match with specifik id from api but after filter FINISHED it dont find it.
 const fetchMatchResultFromApi = async (league) => {
   const API_KEY = process.env.API_KEY;
   const url = `${API_BASE_URL}competitions/${league}/matches`;
@@ -60,9 +61,35 @@ const fetchMatchResultFromApi = async (league) => {
       },
     });
 
-    const finishedMatches = response.data.matches.filter(
-      (match) => match.status === "Finished"
+    const match497526 = response.data.matches.find(
+      (match) => match.id === 497526
     );
+    if (match497526) {
+      console.log("Match 497526 found in API response:", match497526);
+    } else {
+      console.log("Match 497526 NOT found in API response");
+    }
+
+    console.log(
+      "Statuses of all matches:",
+      response.data.matches.map((match) => ({
+        id: match.id,
+        status: match.status,
+      }))
+    );
+
+    const finishedMatches = response.data.matches.filter(
+      (match) => match.status === "FINISHED"
+    );
+
+    const isMatch497526Finished = finishedMatches.some(
+      (match) => match.id === 497526
+    );
+    if (isMatch497526Finished) {
+      console.log("Match 497526 is in the finishedMatches list.");
+    } else {
+      console.log("Match 497526 is NOT in the finishedMatches list.");
+    }
 
     return finishedMatches;
   } catch (error) {
@@ -71,26 +98,44 @@ const fetchMatchResultFromApi = async (league) => {
   }
 };
 
-const leagues = ["PL", "FL1", "ABL", "SA", "PD"];
-
 export const updateMatchResultsAndPredicitons = async () => {
   try {
+    const leagues = ["PL", "FL1", "SA", "PD"];
+
+    const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
     for (const league of leagues) {
       const finishedMatches = await fetchMatchResultFromApi(league);
+      await delay(2000);
 
       for (const match of finishedMatches) {
         const dbMatch = await matchModel.findOne({ match_id: match.id });
 
         if (dbMatch) {
-          dbMatch.status = match.status;
-          dbMatch.result = `${match.score.fullTime.homeTeam}-${match.score.fullTime.awayTeam}`;
-          await dbMatch.save();
+          console.log("Match found in database:", dbMatch);
+          if (dbMatch.status !== "FINISHED" && match.status === "FINISHED") {
+            console.log("Updating match with ID:", dbMatch.match_id);
+            dbMatch.status = "FINISHED";
+            dbMatch.result = {
+              home: match.score.fullTime.home,
+              away: match.score.fullTime.away,
+            };
 
-          console.log(
-            `Match ${match.id} updated with result: ${dbMatch.result}`
-          );
+            console.log("Updated match object before saving:", dbMatch);
+            await dbMatch.save();
 
-          await processUserPredictions(dbMatch);
+            console.log(
+              `Match ${match.id} updated with result: ${dbMatch.result.home}-${dbMatch.result.away}`
+            );
+
+            await processUserPredictions(dbMatch);
+          } else {
+            console.log(
+              `Match ${match.id} has already been finished and updated`
+            );
+          }
+        } else {
+          console.log(`Match ${match.id} not found in database`);
         }
       }
     }

@@ -6,6 +6,7 @@ import userRoutes from "./routes/userRoutes.js";
 import predictionRoutes from "./routes/predictionRoutes.js";
 import matchRoutes from "./routes/matchRoutes.js";
 import "./jobs/updateMatchResultsTasks.js";
+import leaderboardRoutes from "./routes/leaderboardRoutes.js";
 
 dotenv.config();
 
@@ -20,6 +21,8 @@ app.use("/api/users", userRoutes);
 app.use("/api/predictions", predictionRoutes);
 
 app.use("/api/matches", matchRoutes);
+
+app.use("/api/leaderboard", leaderboardRoutes);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
