@@ -1,7 +1,6 @@
 import request from "supertest";
 import app from "../server.js";
 import userModel from "../models/userModel.js";
-import bcrypt from "bcrypt";
 
 beforeAll(async () => {
   await new Promise((resolve) => setTimeout(resolve, 5000));
@@ -73,5 +72,19 @@ describe("User endpoints", () => {
 
     expect(response.statusCode).toBe(401);
     expect(response.body.message).toBe("No user found");
+  });
+
+  it("Should delete a user by ID", async () => {
+    const userId = createdUser._id.toString();
+
+    const responseDelete = await request(app)
+      .delete(`/api/users/${userId}`)
+      .send();
+
+    expect(responseDelete.statusCode).toBe(200);
+    expect(responseDelete.body.message).toBe("User was deleted successfully");
+
+    const deletedUser = await userModel.findById(userId);
+    expect(deletedUser).toBeNull();
   });
 }, 20000);
