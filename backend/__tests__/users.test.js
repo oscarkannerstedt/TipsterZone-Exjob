@@ -30,10 +30,30 @@ describe("User endpoints", () => {
     expect(user.username).toBe(newUser.username);
   });
 
+  it("Should update the user information", async () => {
+    const updatedUserData = {
+      username: "updatedTestUser",
+      email: "updatedTestUser@example.com",
+      password: "newpassword123",
+    };
+
+    const response = await request(app)
+      .put(`/api/users/${createdUser._id}`)
+      .send(updatedUserData);
+
+    expect(response.statusCode).toBe(200);
+    expect(response.body.username).toBe(updatedUserData.username);
+    expect(response.body.email).toBe(updatedUserData.email);
+
+    const updatedUser = await userModel.findById(createdUser._id);
+    expect(updatedUser.username).toBe(updatedUserData.username);
+    expect(updatedUser.email).toBe(updatedUserData.email);
+  });
+
   it("Should login with correct email & password", async () => {
     const loginData = {
-      email: "testUser2@example.com",
-      password: "password123",
+      email: "updatedTestUser@example.com",
+      password: "newpassword123",
     };
 
     const response = await request(app)
@@ -43,12 +63,12 @@ describe("User endpoints", () => {
     expect(response.statusCode).toBe(200);
     expect(response.body).toHaveProperty("userId", createdUser.id);
     expect(response.body).toHaveProperty("email", loginData.email);
-    expect(response.body).toHaveProperty("username", createdUser.username);
+    expect(response.body).toHaveProperty("username", "updatedTestUser");
   });
 
   it("Should return 401 if password is incorrect", async () => {
     const loginData = {
-      email: "testUser2@example.com",
+      email: "updatedTestUser@example.com",
       password: "wrongPassword",
     };
 
