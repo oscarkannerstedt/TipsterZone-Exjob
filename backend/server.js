@@ -25,6 +25,15 @@ app.use("/api/matches", matchRoutes);
 app.use("/api/leaderboard", leaderboardRoutes);
 
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-  console.log(`Server is up and running on ${PORT}`);
-});
+
+// app.listen(PORT, () => {
+//   console.log(`Server is up and running on ${PORT}`);
+// });
+
+if (process.env.NODE_ENV !== "test") {
+  app.listen(PORT, () => {
+    console.log(`Server is up and running on ${PORT}`);
+  });
+}
+
+export default app;
