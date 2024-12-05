@@ -139,40 +139,47 @@ export const getPredictionsByUserId = async (req, res) => {
 // Update user predicitons when match is finished
 const processUserPredictions = async () => {
   try {
-    const predicitons = await PredictionModel.find({
+    const predictions = await PredictionModel.find({
       match_id: match.match_id,
+      processed: false,
     });
 
-    for (const prediciton of predicitons) {
+    if (predictions.length === 0) {
+      console.log(`No predictions found for match ${match.match_id}`);
+    }
+
+    const homeScore = match.result.home;
+    const awayScore = match.result.away;
+
+    let actualOutcome;
+
+    if (homeScore > awayScore) {
+      actualOutcome = "1";
+    } else if (homeScore < awayScore) {
+      actualOutcome = "2";
+    } else {
+      actualOutcome = "X";
+    }
+
+    for (const prediction of predictions) {
       let points = 0;
 
-      const [homeScore, awayScore] = match.result.split("-").map(Number);
-      let actualOutcome;
-
-      if (homeScore > awayScore) {
-        actualOutcome = "1";
-      } else if (homeScore < awayScore) {
-        actualOutcome = "2";
-      } else {
-        actualOutcome = "X";
-      }
-
-      if (prediciton.predicted_outcome === actualOutcome) {
+      if (prediction.predicted_outcome === actualOutcome) {
         points = 3;
       } else {
         points = -1;
       }
 
-      prediciton.points_awarded = points;
-      prediciton.processed = true;
+      prediction.points_awarded = points;
+      prediction.processed = true;
+      await prediction.save();
 
-      await prediciton.save();
-
-      //Update users total points when match is finished
-      const user = await userModel.findById(prediciton.user_id);
+      const user = await userModel.findById(prediction.user_id);
       if (user) {
         user.total_points += points;
         await user.save();
+      } else {
+        console.log(`User not found for prediction ${prediction._id}`);
       }
     }
   } catch (error) {
