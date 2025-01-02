@@ -2,6 +2,8 @@ import PredictionModel from "../models/predictionModel.js";
 import MatchModel from "../models/matchModel.js";
 import matchControllers from "./matchControllers.js";
 import userModel from "../models/userModel.js";
+import predictionModel from "../models/predictionModel.js";
+import mongoose from "mongoose";
 
 //Create a prediction
 export const createPrediction = async (req, res) => {
@@ -57,6 +59,22 @@ export const createPrediction = async (req, res) => {
       console.log("Match saved to database: ", match);
     }
 
+    const userObjectId = mongoose.Types.ObjectId(user_id);
+    const matchIdNumber = Number(match_id);
+
+    //Check if user already placed a prediciton for this match
+    const existingPrediction = await predictionModel.findOne({
+      user_id: userObjectId,
+      match_id: matchIdNumber,
+    });
+
+    if (existingPrediction) {
+      return res.status(400).json({
+        message: "You have already placed a prediciton for this match.",
+      });
+    }
+
+    //Create a new prediciton
     const prediction = new PredictionModel({
       user_id,
       match_id,
@@ -137,20 +155,20 @@ export const getPredictionsByUserId = async (req, res) => {
 };
 
 // Update user predicitons when match is finished
-const processUserPredictions = async () => {
+const processUserPredictions = async (dbMatch) => {
   try {
     const predictions = await PredictionModel.find({
-      match_id: match.match_id,
+      match_id: dbMatch.match_id,
       processed: false,
     });
 
     if (predictions.length === 0) {
-      console.log(`No predictions found for match ${match.match_id}`);
+      console.log(`No predictions found for match ${dbMatch.match_id}`);
     }
-
-    const homeScore = match.result.home;
-    const awayScore = match.result.away;
-
+    console.log("test1");
+    const homeScore = dbMatch.result.home;
+    const awayScore = dbMatch.result.away;
+    console.log(homeScore);
     let actualOutcome;
 
     if (homeScore > awayScore) {
