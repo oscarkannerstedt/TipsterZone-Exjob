@@ -7,7 +7,7 @@ import { updateMatchResultsAndPredicitons } from "../controllers/matchController
 // });
 
 // Scheduled to run every 10 minutes
-cron.schedule("*/3 * * * *", async () => {
-  console.log("Cron job körs");
-  await updateMatchResultsAndPredicitons();
-});
+// cron.schedule("*/3 * * * *", async () => {
+//   console.log("Cron job körs");
+//   await updateMatchResultsAndPredicitons();
+// });
