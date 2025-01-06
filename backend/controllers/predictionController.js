@@ -2,6 +2,8 @@ import PredictionModel from "../models/predictionModel.js";
 import MatchModel from "../models/matchModel.js";
 import matchControllers from "./matchControllers.js";
 import userModel from "../models/userModel.js";
+import predictionModel from "../models/predictionModel.js";
+import mongoose from "mongoose";
 
 //Create a prediction
 export const createPrediction = async (req, res) => {
@@ -57,6 +59,19 @@ export const createPrediction = async (req, res) => {
       console.log("Match saved to database: ", match);
     }
 
+    //Check if user already placed a prediciton for this match
+    const existingPrediction = await predictionModel.findOne({
+      user_id: user_id,
+      match_id: match_id,
+    });
+
+    if (existingPrediction) {
+      return res.status(400).json({
+        message: "You have already placed a prediciton for this match.",
+      });
+    }
+
+    //Create a new prediciton
     const prediction = new PredictionModel({
       user_id,
       match_id,
@@ -137,42 +152,47 @@ export const getPredictionsByUserId = async (req, res) => {
 };
 
 // Update user predicitons when match is finished
-const processUserPredictions = async () => {
+const processUserPredictions = async (dbMatch) => {
   try {
-    const predicitons = await PredictionModel.find({
-      match_id: match.match_id,
+    const predictions = await PredictionModel.find({
+      match_id: dbMatch.match_id,
+      processed: false,
     });
 
-    for (const prediciton of predicitons) {
+    if (predictions.length === 0) {
+      console.log(`No predictions found for match ${dbMatch.match_id}`);
+    }
+    const homeScore = dbMatch.result.home;
+    const awayScore = dbMatch.result.away;
+    let actualOutcome;
+
+    if (homeScore > awayScore) {
+      actualOutcome = "1";
+    } else if (homeScore < awayScore) {
+      actualOutcome = "2";
+    } else {
+      actualOutcome = "X";
+    }
+
+    for (const prediction of predictions) {
       let points = 0;
 
-      const [homeScore, awayScore] = match.result.split("-").map(Number);
-      let actualOutcome;
-
-      if (homeScore > awayScore) {
-        actualOutcome = "1";
-      } else if (homeScore < awayScore) {
-        actualOutcome = "2";
-      } else {
-        actualOutcome = "X";
-      }
-
-      if (prediciton.predicted_outcome === actualOutcome) {
+      if (prediction.predicted_outcome === actualOutcome) {
         points = 3;
       } else {
         points = -1;
       }
 
-      prediciton.points_awarded = points;
-      prediciton.processed = true;
+      prediction.points_awarded = points;
+      prediction.processed = true;
+      await prediction.save();
 
-      await prediciton.save();
-
-      //Update users total points when match is finished
-      const user = await userModel.findById(prediciton.user_id);
+      const user = await userModel.findById(prediction.user_id);
       if (user) {
         user.total_points += points;
         await user.save();
+      } else {
+        console.log(`User not found for prediction ${prediction._id}`);
       }
     }
   } catch (error) {

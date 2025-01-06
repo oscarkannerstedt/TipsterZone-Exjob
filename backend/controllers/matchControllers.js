@@ -21,7 +21,6 @@ const fetchAllMatches = async (req, res) => {
   const cachedData = cache.get(cacheKey);
 
   if (cachedData) {
-    console.log("Serving from cache");
     return res.status(200).json(cachedData);
   }
 
@@ -61,35 +60,9 @@ const fetchMatchResultFromApi = async (league) => {
       },
     });
 
-    const match497526 = response.data.matches.find(
-      (match) => match.id === 497526
-    );
-    if (match497526) {
-      console.log("Match 497526 found in API response:", match497526);
-    } else {
-      console.log("Match 497526 NOT found in API response");
-    }
-
-    console.log(
-      "Statuses of all matches:",
-      response.data.matches.map((match) => ({
-        id: match.id,
-        status: match.status,
-      }))
-    );
-
     const finishedMatches = response.data.matches.filter(
       (match) => match.status === "FINISHED"
     );
-
-    const isMatch497526Finished = finishedMatches.some(
-      (match) => match.id === 497526
-    );
-    if (isMatch497526Finished) {
-      console.log("Match 497526 is in the finishedMatches list.");
-    } else {
-      console.log("Match 497526 is NOT in the finishedMatches list.");
-    }
 
     return finishedMatches;
   } catch (error) {
@@ -121,13 +94,7 @@ export const updateMatchResultsAndPredicitons = async () => {
               away: match.score.fullTime.away,
             };
 
-            console.log("Updated match object before saving:", dbMatch);
             await dbMatch.save();
-
-            console.log(
-              `Match ${match.id} updated with result: ${dbMatch.result.home}-${dbMatch.result.away}`
-            );
-
             await processUserPredictions(dbMatch);
           } else {
             console.log(
