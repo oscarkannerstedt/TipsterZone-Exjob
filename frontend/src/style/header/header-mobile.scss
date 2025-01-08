@@ -1,0 +1,54 @@
+.header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 60px;
+  background-color: #fff;
+  position: relative;
+
+  .logo {
+    font-size: 2rem;
+    font-weight: bold;
+  }
+
+  .burger {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+
+    span {
+      width: 25px;
+      height: 3px;
+      background-color: black;
+      border-radius: 10px;
+    }
+  }
+
+  .mobile-menu {
+    position: absolute;
+    top: 0px;
+    left: 0;
+    right: 0;
+    background-color: black;
+    color: white;
+    transform: translateY(-100%);
+    transition: transform 0.3s ease-in-out;
+    z-index: 10;
+
+    ul {
+      list-style: none;
+      padding: 1rem;
+      margin: 0;
+
+      li {
+        padding: 0.5rem 0;
+      }
+    }
+
+    &.open {
+      transform: translateY(0);
+    }
+  }
+}

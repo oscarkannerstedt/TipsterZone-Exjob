@@ -8,7 +8,7 @@ export const Header = () => {
   const handleNavigation = useHandleNavigation();
 
   const toggleMenu = () => {
-    setMenuOpen((prev) => !prev);
+    setMenuOpen(!menuOpen);
   };
 
   return (
@@ -18,7 +18,7 @@ export const Header = () => {
           TIPSTERZONE
         </div>
         <div
-          className="burger-menu"
+          className="burger"
           onClick={toggleMenu}
           aria-expanded={menuOpen}
           role="button"
