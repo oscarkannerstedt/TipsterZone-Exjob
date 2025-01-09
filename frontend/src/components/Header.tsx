@@ -1,57 +1,115 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useHandleNavigation } from "../utils/navigationUtils";
 
 export const Header = () => {
-  const [menuOpen, setMenuOpen] = useState(false);
+  const [burgerOpen, setBurgerOpen] = useState(false);
+  const [menuDisplay, setMenuDisplay] = useState(true);
   const isLoggedIn = false;
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 1024) {
+        setMenuDisplay(true);
+        setBurgerOpen(false);
+      } else {
+        setMenuDisplay(false);
+      }
+    };
+
+    handleResize();
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   const handleNavigation = useHandleNavigation();
 
-  const toggleMenu = () => {
-    setMenuOpen(!menuOpen);
+  const handleBurger = () => {
+    setBurgerOpen(!burgerOpen);
   };
 
   return (
-    <header className="header">
-      <div className="header-container">
-        <div className="logo" onClick={() => handleNavigation("/")}>
-          TIPSTERZONE
-        </div>
-        <div
-          className="burger"
-          onClick={toggleMenu}
-          aria-expanded={menuOpen}
-          role="button"
-          aria-label="Öppna meny"
-        >
-          <span></span>
-          <span></span>
-          <span></span>
-        </div>
-      </div>
-      <nav className={`mobile-menu ${menuOpen ? "open" : ""}`}>
-        <ul>
-          <li onClick={() => handleNavigation("/matches")}>Matcher</li>
-          <li onClick={() => handleNavigation("/leaderboard")}>Topp Lista</li>
-          <li onClick={() => handleNavigation("/mypredictions")}>
-            Mina Tippningar
-          </li>
-
-          {isLoggedIn ? (
-            <li>
-              <button onClick={() => alert("Loggar ut...")}>Logga ut</button>
-            </li>
-          ) : (
-            <>
-              <li onClick={() => handleNavigation("/login")}>Logga In</li>
-              <li onClick={() => handleNavigation("/signup")}>
-                Skapa Användare
+    <section className="header">
+      {menuDisplay && (
+        <>
+          <div className="logo" onClick={() => handleNavigation("/")}>
+            <h1>TIPSTERZONE</h1>
+          </div>
+          <nav>
+            <ul className="nav-items">
+              <li onClick={() => handleNavigation("/matches")}>Matcher</li>
+              <li onClick={() => handleNavigation("/leaderboard")}>
+                Topp Lista
               </li>
-            </>
+              <li onClick={() => handleNavigation("/mypredictions")}>
+                Mina Tippningar
+              </li>
+              {isLoggedIn ? (
+                <li>
+                  <button onClick={() => alert("Loggar ut...")}>
+                    Logga ut
+                  </button>
+                </li>
+              ) : (
+                <>
+                  <li onClick={() => handleNavigation("/login")}>Logga In</li>
+                  <li onClick={() => handleNavigation("/signup")}>
+                    Skapa Användare
+                  </li>
+                </>
+              )}
+            </ul>
+          </nav>
+        </>
+      )}
+
+      {!menuDisplay && (
+        <>
+          <div className="logo" onClick={() => handleNavigation("/")}>
+            <h1>TIPSTERZONE</h1>
+          </div>
+          <div className="burger" onClick={handleBurger}>
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+          {burgerOpen && (
+            <div className="burger-menu">
+              <nav>
+                <ul className="nav-items">
+                  <li onClick={() => handleNavigation("/matches")}>Matcher</li>
+                  <li onClick={() => handleNavigation("/leaderboard")}>
+                    Topp Lista
+                  </li>
+                  <li onClick={() => handleNavigation("/mypredictions")}>
+                    Mina Tippningar
+                  </li>
+                  {isLoggedIn ? (
+                    <li>
+                      <button onClick={() => alert("Loggar ut...")}>
+                        Logga ut
+                      </button>
+                    </li>
+                  ) : (
+                    <>
+                      <li onClick={() => handleNavigation("/login")}>
+                        Logga In
+                      </li>
+                      <li onClick={() => handleNavigation("/signup")}>
+                        Skapa Användare
+                      </li>
+                    </>
+                  )}
+                </ul>
+              </nav>
+            </div>
           )}
-        </ul>
-      </nav>
-    </header>
+        </>
+      )}
+    </section>
   );
 };
 
