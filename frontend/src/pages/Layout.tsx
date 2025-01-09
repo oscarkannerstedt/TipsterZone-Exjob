@@ -4,7 +4,7 @@ import Footer from "../components/Footer";
 
 export const Layout = () => {
   return (
-    <>
+    <div className="wrapper">
       <header>
         <Header />
       </header>
@@ -14,7 +14,7 @@ export const Layout = () => {
       <footer>
         <Footer />
       </footer>
-    </>
+    </div>
   );
 };
 
