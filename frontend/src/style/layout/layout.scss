@@ -1,0 +1,18 @@
+body {
+  margin: 0;
+  padding: 0;
+  background-image: url("../../../public/images/green-background.jpg");
+  background-size: cover;
+}
+
+.wrapper {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+header,
+main,
+footer {
+  width: 100%;
+}
