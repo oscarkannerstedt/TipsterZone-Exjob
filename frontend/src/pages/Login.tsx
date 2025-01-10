@@ -57,7 +57,12 @@ const Login = () => {
 
       <div className="create-user-wrapper">
         <p>Har du inte ett konto?</p>
-        <button onClick={() => handleNavigation("/signup")}>Skapa konto</button>
+        <button
+          onClick={() => handleNavigation("/signup")}
+          className="signup-button"
+        >
+          Skapa konto
+        </button>
       </div>
     </div>
   );
