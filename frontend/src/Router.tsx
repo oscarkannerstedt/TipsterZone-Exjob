@@ -5,6 +5,7 @@ import NotFound from "./pages/NotFound";
 import Leaderboard from "./pages/Leaderboard";
 import Matches from "./pages/Matches";
 import MyPredicitons from "./pages/MyPredictions";
+import Login from "./pages/Login";
 
 export const router = createBrowserRouter([
   {
@@ -27,6 +28,10 @@ export const router = createBrowserRouter([
       {
         path: "/mypredictions",
         element: <MyPredicitons />,
+      },
+      {
+        path: "/login",
+        element: <Login />,
       },
     ],
   },
