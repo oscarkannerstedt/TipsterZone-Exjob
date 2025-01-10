@@ -1,11 +1,14 @@
 import { useState } from "react";
 import { loginUser } from "../services/authServices";
 import { AxiosError } from "axios";
+import { useHandleNavigation } from "../utils/navigationUtils";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
+
+  const handleNavigation = useHandleNavigation();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -51,6 +54,11 @@ const Login = () => {
         </button>
       </form>
       {error && <p style={{ color: "red" }}>{error}</p>}
+
+      <div className="create-user-wrapper">
+        <p>Har du inte ett konto?</p>
+        <button onClick={() => handleNavigation("/signup")}>Skapa konto</button>
+      </div>
     </div>
   );
 };
