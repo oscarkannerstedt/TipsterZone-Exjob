@@ -1,0 +1,45 @@
+@media (min-width: 600px) {
+  .login-wrapper {
+    h1 {
+      font-size: 2.2rem;
+    }
+
+    form {
+      width: 85%;
+      max-width: 500px;
+      padding: 1.5rem;
+
+      .email-wrapper,
+      .password-wrapper {
+        margin-left: 0;
+        margin-right: 0;
+      }
+
+      .email-wrapper label,
+      .password-wrapper label {
+        font-size: 1.2rem;
+      }
+
+      .email-wrapper input,
+      .password-wrapper input {
+        width: 300px;
+      }
+
+      .submit-button {
+        font-size: 1.2rem;
+        margin-top: 0.8rem;
+      }
+    }
+  }
+
+  .create-user-wrapper {
+    p {
+      font-size: 1.4rem;
+    }
+
+    button {
+      padding: 0.8rem 1.2rem;
+      font-size: 1.2rem;
+    }
+  }
+}
