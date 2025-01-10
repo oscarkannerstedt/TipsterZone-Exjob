@@ -20,16 +20,16 @@ const Login = () => {
       if (axiosError.response && axiosError.response.data) {
         setError(axiosError.response.data.message);
       } else {
-        setError("Error while login");
+        setError("Fel användarnamn eller lösenord");
       }
     }
   };
 
   return (
-    <div>
+    <div className="login-wrapper">
       <h1>Logga in</h1>
       <form onSubmit={handleSubmit}>
-        <div>
+        <div className="email-wrapper">
           <label>Email</label>
           <input
             type="email"
@@ -38,7 +38,7 @@ const Login = () => {
           />
         </div>
 
-        <div>
+        <div className="password-wrapper">
           <label>Lösenord</label>
           <input
             type="password"
@@ -46,7 +46,9 @@ const Login = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
-        <button type="submit">Logga in</button>
+        <button type="submit" className="submit-button">
+          Logga in
+        </button>
       </form>
       {error && <p style={{ color: "red" }}>{error}</p>}
     </div>
