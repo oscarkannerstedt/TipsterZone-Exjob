@@ -31,6 +31,8 @@ const SignupUser = () => {
     try {
       await createUser({ username, email, password });
       setSuccess("Användaren har skapats.");
+
+      handleNavigation("/login");
     } catch (err: unknown) {
       const axiosError = err as AxiosError<{ error: string }>;
       if (axiosError.response && axiosError.response.data) {
