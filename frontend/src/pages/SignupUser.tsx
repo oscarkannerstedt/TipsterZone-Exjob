@@ -6,6 +6,7 @@ const SignupUser = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
 
@@ -16,6 +17,11 @@ const SignupUser = () => {
 
     if (!username.trim() || !email.trim() || !password.trim()) {
       setError("Alla fält måste fyllas i.");
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      setError("Lösenorden matchar inte.");
       return;
     }
 
@@ -63,6 +69,16 @@ const SignupUser = () => {
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+        </div>
+        <div>
+          <label htmlFor="confirmPassword">Bekräfta lösenord</label>
+          <input
+            id="confirmPassword"
+            type="password"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
             required
           />
         </div>
