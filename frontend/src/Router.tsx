@@ -6,7 +6,7 @@ import Leaderboard from "./pages/Leaderboard";
 import Matches from "./pages/Matches";
 import MyPredicitons from "./pages/MyPredictions";
 import Login from "./pages/Login";
-import CreateUser from "./pages/CreateUser";
+import SignupUser from "./pages/SignupUser";
 
 export const router = createBrowserRouter([
   {
@@ -36,7 +36,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "/signup",
-        element: <CreateUser />,
+        element: <SignupUser />,
       },
     ],
   },
