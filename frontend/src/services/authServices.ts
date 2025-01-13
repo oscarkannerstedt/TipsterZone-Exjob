@@ -16,13 +16,13 @@ export const loginUser = async (email: string, password: string) => {
 };
 
 export const createUser = async (userData: {
-  userName: string;
+  username: string;
   email: string;
   password: string;
   total_points?: number;
 }) => {
   try {
-    const response = await axios.post(`${API_URL}/users`, userData);
+    const response = await axios.post(`${API_URL}/api/users/add`, userData);
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error) && error.response) {
