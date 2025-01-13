@@ -42,7 +42,7 @@ const SignupUser = () => {
     <div className="signup-wrapper">
       <h1>Skapa konto</h1>
       <form onSubmit={handleSubmit}>
-        <div>
+        <div className="username-wrapper">
           <label htmlFor="username">Användarnamn</label>
           <input
             id="username"
@@ -52,7 +52,7 @@ const SignupUser = () => {
             required
           />
         </div>
-        <div>
+        <div className="email-wrapper">
           <label htmlFor="email">Email</label>
           <input
             id="email"
@@ -62,7 +62,7 @@ const SignupUser = () => {
             required
           />
         </div>
-        <div>
+        <div className="password-wrapper">
           <label htmlFor="password">Lösenord</label>
           <input
             id="password"
@@ -72,7 +72,7 @@ const SignupUser = () => {
             required
           />
         </div>
-        <div>
+        <div className="confirmpassword-wrapper">
           <label htmlFor="confirmPassword">Bekräfta lösenord</label>
           <input
             id="confirmPassword"
@@ -82,7 +82,9 @@ const SignupUser = () => {
             required
           />
         </div>
-        <button type="submit">Skapa konto</button>
+        <button type="submit" className="submit-button">
+          Skapa konto
+        </button>
       </form>
 
       <div aria-live="polite">
