@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { useHandleNavigation } from "../utils/navigationUtils";
+import { useAuth } from "../hooks/useAuth";
 
 export const Header = () => {
   const [burgerOpen, setBurgerOpen] = useState(false);
   const [menuDisplay, setMenuDisplay] = useState(true);
-  const isLoggedIn = false;
+  const { isLoggedIn, logout } = useAuth();
 
   useEffect(() => {
     const handleResize = () => {
@@ -49,9 +50,7 @@ export const Header = () => {
               </li>
               {isLoggedIn ? (
                 <li>
-                  <button onClick={() => alert("Loggar ut...")}>
-                    Logga ut
-                  </button>
+                  <button onClick={logout}>Logga ut</button>
                 </li>
               ) : (
                 <>
@@ -89,9 +88,7 @@ export const Header = () => {
                   </li>
                   {isLoggedIn ? (
                     <li>
-                      <button onClick={() => alert("Loggar ut...")}>
-                        Logga ut
-                      </button>
+                      <button onClick={logout}>Logga ut</button>
                     </li>
                   ) : (
                     <>
