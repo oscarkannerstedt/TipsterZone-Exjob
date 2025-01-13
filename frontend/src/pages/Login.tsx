@@ -2,6 +2,7 @@ import { useState } from "react";
 import { loginUser } from "../services/authServices";
 import { AxiosError } from "axios";
 import { useHandleNavigation } from "../utils/navigationUtils";
+import { useAuth } from "../hooks/useAuth";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -9,6 +10,7 @@ const Login = () => {
   const [error, setError] = useState<string | null>(null);
 
   const handleNavigation = useHandleNavigation();
+  const { login } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -21,7 +23,10 @@ const Login = () => {
 
     try {
       const userData = await loginUser(email, password);
+      login(userData.userId);
+
       console.log("Inloggad som: ", userData);
+
       //Navigate to new page
     } catch (err: unknown) {
       const axiosError = err as AxiosError<{ message: string }>;

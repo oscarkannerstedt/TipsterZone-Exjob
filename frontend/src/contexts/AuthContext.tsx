@@ -2,17 +2,38 @@ import { ReactNode, useEffect, useState } from "react";
 import { AuthContext } from "./AuthContextTs";
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userId, setUserId] = useState<string | null>(null);
 
   useEffect(() => {
-    const savedUserId = localStorage.getItem("userId");
-    const savedIsLoggedIn = localStorage.getItem("isLoggedIn");
+    const storedUserId = localStorage.getItem("userId");
+    const storedIsLoggedIn = localStorage.getItem("isLoggedIn") === "true";
 
-    if (savedIsLoggedIn === "true" && savedUserId) {
+    if (storedUserId && storedIsLoggedIn) {
+      setUserId(storedUserId);
       setIsLoggedIn(true);
-      setUserId(savedUserId);
     }
+  }, []);
+
+  useEffect(() => {
+    const handleStorageChange = () => {
+      const storedIsLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+      const storedUserId = localStorage.getItem("userId");
+
+      if (storedUserId && storedIsLoggedIn) {
+        setUserId(storedUserId);
+        setIsLoggedIn(true);
+      } else {
+        setUserId(null);
+        setIsLoggedIn(false);
+      }
+    };
+
+    window.addEventListener("storage", handleStorageChange);
+
+    return () => {
+      window.removeEventListener("storage", handleStorageChange);
+    };
   }, []);
 
   const login = (id: string) => {

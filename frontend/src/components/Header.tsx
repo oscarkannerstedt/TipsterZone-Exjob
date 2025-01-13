@@ -6,6 +6,7 @@ export const Header = () => {
   const [burgerOpen, setBurgerOpen] = useState(false);
   const [menuDisplay, setMenuDisplay] = useState(true);
   const { isLoggedIn, logout } = useAuth();
+  console.log("isLoggedIn: ", isLoggedIn);
 
   useEffect(() => {
     const handleResize = () => {
