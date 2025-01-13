@@ -4,7 +4,8 @@ import bcrypt from "bcrypt";
 // Create new user
 export const createUser = async (req, res) => {
   try {
-    const { username, email, password, total_points } = req.body;
+    const { username, email, password } = req.body;
+    const total_points = 0;
 
     //Generate hashed password
     const salt = await bcrypt.genSalt();
