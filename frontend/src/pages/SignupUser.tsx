@@ -47,6 +47,7 @@ const SignupUser = () => {
           <input
             id="username"
             type="text"
+            placeholder="Användarnamn"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             required
@@ -57,6 +58,7 @@ const SignupUser = () => {
           <input
             id="email"
             type="email"
+            placeholder="E-post"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
@@ -67,6 +69,7 @@ const SignupUser = () => {
           <input
             id="password"
             type="password"
+            placeholder="Lösenord"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
@@ -77,6 +80,7 @@ const SignupUser = () => {
           <input
             id="confirmPassword"
             type="password"
+            placeholder="Bekräfta lösenord"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
             required
