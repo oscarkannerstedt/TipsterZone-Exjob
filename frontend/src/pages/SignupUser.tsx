@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { createUser } from "../services/authServices";
 import { AxiosError } from "axios";
+import { useHandleNavigation } from "../utils/navigationUtils";
 
 const SignupUser = () => {
   const [username, setUsername] = useState("");
@@ -9,6 +10,8 @@ const SignupUser = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
+
+  const handleNavigation = useHandleNavigation();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -102,6 +105,17 @@ const SignupUser = () => {
             {success}
           </p>
         )}
+      </div>
+
+      <div className="login-user-wrapper">
+        <p>Har du redan ett konto?</p>
+        <button
+          onClick={() => handleNavigation("/login")}
+          className="login-button"
+          aria-label="Logga in om du redan har ett konto"
+        >
+          Logga in här
+        </button>
       </div>
     </div>
   );
