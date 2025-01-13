@@ -14,3 +14,21 @@ export const loginUser = async (email: string, password: string) => {
     throw new Error("Server error");
   }
 };
+
+export const createUser = async (userData: {
+  userName: string;
+  email: string;
+  password: string;
+  total_points?: number;
+}) => {
+  try {
+    const response = await axios.post(`${API_URL}/users`, userData);
+    return response.data;
+  } catch (error) {
+    if (axios.isAxiosError(error) && error.response) {
+      const message = error.response.data.error || "Error while creating user";
+      throw new Error(message);
+    }
+    throw new Error("Server error");
+  }
+};
