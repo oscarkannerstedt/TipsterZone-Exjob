@@ -14,8 +14,18 @@ const app = express();
 
 app.options("*", cors());
 
+// const corsOptions = {
+//   // origin: process.env.FRONTEND_URL || "http://localhost:5173",
+//   origin: "*",
+//   methods: ["GET", "POST", "PUT", "DELETE"],
+//   credentials: true,
+// };
+
 const corsOptions = {
-  origin: process.env.FRONTEND_URL || "http://localhost:5173",
+  origin:
+    process.env.NODE_ENV === "production"
+      ? "https://tipsterzone.onrender.com"
+      : "http://localhost:5173",
   methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true,
 };
