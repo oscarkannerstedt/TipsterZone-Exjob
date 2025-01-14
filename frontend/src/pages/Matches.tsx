@@ -23,17 +23,27 @@ export const Matches = () => {
       <h1>Kommande Matcher</h1>
 
       <div>
-        <label htmlFor="league">Välj en liga</label>
-        <select
-          id="league"
-          value={league}
-          onChange={(e) => setLeague(e.target.value)}
-        >
-          <option value="PL">Premier League</option>
-          <option value="FL1">Ligue 1</option>
-          <option value="SA">Serie A</option>
-          <option value="PD">La Liga</option>
-        </select>
+        <div className="">
+          <div className="league-menu-pl" onClick={() => setLeague("PL")}>
+            <img src="" alt="England" />
+            <div>England</div>
+          </div>
+
+          <div className="league-menu-fl1" onClick={() => setLeague("FL1")}>
+            <img src="" alt="Frankrike" />
+            <div>Frankrike</div>
+          </div>
+
+          <div className="league-menu-sa" onClick={() => setLeague("SA")}>
+            <img src="" alt="Italien" />
+            <div>Italien</div>
+          </div>
+
+          <div className="league-menu-pl" onClick={() => setLeague("PD")}>
+            <img src="" alt="Spanien" />
+            <div>Spanien</div>
+          </div>
+        </div>
       </div>
 
       <ul>
