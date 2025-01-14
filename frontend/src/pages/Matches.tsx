@@ -19,30 +19,40 @@ export const Matches = () => {
   }, [league]);
 
   return (
-    <div>
+    <div className="matches-wrapper">
       <h1>Kommande Matcher</h1>
 
-      <div>
-        <div className="">
-          <div className="league-menu-pl" onClick={() => setLeague("PL")}>
-            <img src="" alt="England" />
-            <div>England</div>
-          </div>
+      <div className="league-menu-wrapper">
+        <div
+          className=" league-menu league-menu-pl"
+          onClick={() => setLeague("PL")}
+        >
+          <img src="" alt="England" />
+          <div>England</div>
+        </div>
 
-          <div className="league-menu-fl1" onClick={() => setLeague("FL1")}>
-            <img src="" alt="Frankrike" />
-            <div>Frankrike</div>
-          </div>
+        <div
+          className="league-menu league-menu-fl1"
+          onClick={() => setLeague("FL1")}
+        >
+          <img src="" alt="Frankrike" />
+          <div>Frankrike</div>
+        </div>
 
-          <div className="league-menu-sa" onClick={() => setLeague("SA")}>
-            <img src="" alt="Italien" />
-            <div>Italien</div>
-          </div>
+        <div
+          className=" league-menu league-menu-sa"
+          onClick={() => setLeague("SA")}
+        >
+          <img src="" alt="Italien" />
+          <div>Italien</div>
+        </div>
 
-          <div className="league-menu-pl" onClick={() => setLeague("PD")}>
-            <img src="" alt="Spanien" />
-            <div>Spanien</div>
-          </div>
+        <div
+          className="league menu league-menu-pd"
+          onClick={() => setLeague("PD")}
+        >
+          <img src="" alt="Spanien" />
+          <div>Spanien</div>
         </div>
       </div>
 
