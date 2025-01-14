@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "https://tipsterzone-exjob.onrender.com";
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:10000";
 
 export const loginUser = async (email: string, password: string) => {
   try {
