@@ -4,7 +4,22 @@ import bcrypt from "bcrypt";
 // Create new user
 export const createUser = async (req, res) => {
   try {
-    const { username, email, password, total_points } = req.body;
+    const { username, email, password } = req.body;
+    const total_points = 0;
+
+    //Control to see if username already exist.
+    const existingUsername = await UserModel.findOne({ username });
+    if (existingUsername) {
+      return res.status(400).json({ error: "Användarnamnet är upptaget." });
+    }
+
+    //Control to see if email already exist.
+    const existingEmail = await UserModel.findOne({ email });
+    if (existingEmail) {
+      return res
+        .status(400)
+        .json({ error: "Användare med denna E-post finns redan." });
+    }
 
     //Generate hashed password
     const salt = await bcrypt.genSalt();

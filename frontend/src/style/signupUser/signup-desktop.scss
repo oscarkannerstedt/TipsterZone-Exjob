@@ -1,0 +1,42 @@
+@media (min-width: 1024px) {
+  .signup-wrapper {
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 2rem;
+    }
+
+    form {
+      padding: 2rem;
+
+      .email-wrapper,
+      .username-wrapper,
+      .confirmpassword-wrapper,
+      .password-wrapper {
+        margin-bottom: 1.5rem;
+      }
+
+      .submit-button {
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .submit-button:hover {
+        background-color: #2b7342;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transform: scale(1.05);
+      }
+    }
+
+    .login-button {
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-bottom: 2rem;
+    }
+
+    .login-button:hover {
+      background-color: #2b7342;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      transform: scale(1.05);
+    }
+  }
+}

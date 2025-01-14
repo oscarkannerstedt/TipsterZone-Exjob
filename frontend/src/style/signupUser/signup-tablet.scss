@@ -1,0 +1,33 @@
+@media (min-width: 600px) {
+  .signup-wrapper {
+    h1 {
+      font-size: 2.2rem;
+    }
+
+    form {
+      width: 85%;
+      max-width: 500px;
+      padding: 1.5rem;
+
+      .email-wrapper,
+      .username-wrapper,
+      .confirmpassword-wrapper,
+      .password-wrapper {
+        margin-left: 0;
+        margin-right: 0;
+      }
+
+      .email-wrapper input,
+      .username-wrapper input,
+      .confirmpassword-wrapper input,
+      .password-wrapper input {
+        width: 300px;
+      }
+
+      .submit-button {
+        font-size: 1.2rem;
+        margin-top: 0.8rem;
+      }
+    }
+  }
+}
