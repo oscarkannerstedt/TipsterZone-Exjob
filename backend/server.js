@@ -12,7 +12,15 @@ dotenv.config();
 
 const app = express();
 
-app.use(cors());
+app.options("*", cors());
+
+const corsOptions = {
+  origin: process.env.FRONTEND_URL || "http://localhost:5173",
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  credentials: true,
+};
+
+app.use(cors(corsOptions));
 app.use(express.json());
 
 connectDB();
