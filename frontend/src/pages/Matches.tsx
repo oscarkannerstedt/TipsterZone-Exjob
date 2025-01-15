@@ -27,7 +27,7 @@ export const Matches = () => {
           className=" league-menu league-menu-pl"
           onClick={() => setLeague("PL")}
         >
-          <img src="" alt="England" />
+          <img src="/images/england_round_icon_64.png" alt="England" />
           <div>England</div>
         </div>
 
@@ -35,7 +35,7 @@ export const Matches = () => {
           className="league-menu league-menu-fl1"
           onClick={() => setLeague("FL1")}
         >
-          <img src="" alt="Frankrike" />
+          <img src="/images/france_round_icon_64.png" alt="Frankrike" />
           <div>Frankrike</div>
         </div>
 
@@ -43,15 +43,15 @@ export const Matches = () => {
           className=" league-menu league-menu-sa"
           onClick={() => setLeague("SA")}
         >
-          <img src="" alt="Italien" />
+          <img src="/images/italy_round_icon_64.png" alt="Italien" />
           <div>Italien</div>
         </div>
 
         <div
-          className="league menu league-menu-pd"
+          className="league-menu league-menu-pd"
           onClick={() => setLeague("PD")}
         >
-          <img src="" alt="Spanien" />
+          <img src="/images/spain_round_icon_64.png" alt="Spanien" />
           <div>Spanien</div>
         </div>
       </div>
