@@ -56,18 +56,29 @@ export const Matches = () => {
         </div>
       </div>
 
-      <ul>
+      <div className="match-cards">
         {matches.map((match, index) => (
-          <li key={index}>
-            <div>
-              <span>
-                {match.homeTeam.name} vs {match.awayTeam.name}
-              </span>
-              <span> - {match.utcDate}</span>
+          <div key={index} className="match-card">
+            <div className="teams">
+              <div className="home-team">{match.homeTeam.name}</div>
+              <p>-</p>
+              <div className="away-team">{match.awayTeam.name}</div>
             </div>
-          </li>
+
+            <div className="prediction-options">
+              <button>1</button>
+              <button>X</button>
+              <button>2</button>
+            </div>
+
+            <div className="motivation">
+              <button>Vill du lägga till en motivering?</button>
+            </div>
+
+            <button className="submit-prediction">Lägg tippning</button>
+          </div>
         ))}
-      </ul>
+      </div>
     </div>
   );
 };
