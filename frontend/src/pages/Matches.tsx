@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { fetchMatchesByLeague } from "../services/matchService";
+import { IMatch } from "../types/Match";
 
 export const Matches = () => {
-  const [matches, setMatches] = useState<any[]>([]);
+  const [matches, setMatches] = useState<IMatch[]>([]);
   const [league, setLeague] = useState<string>("PL");
   const [motivationVisible, setMotivationVisible] = useState<boolean[]>([]);
 
