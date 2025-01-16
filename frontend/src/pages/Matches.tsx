@@ -4,6 +4,7 @@ import { fetchMatchesByLeague } from "../services/matchService";
 export const Matches = () => {
   const [matches, setMatches] = useState<any[]>([]);
   const [league, setLeague] = useState<string>("PL");
+  const [motivationVisible, setMotivationVisible] = useState<boolean[]>([]);
 
   useEffect(() => {
     const fetchMatches = async () => {
@@ -17,6 +18,17 @@ export const Matches = () => {
 
     fetchMatches();
   }, [league]);
+
+  useEffect(() => {
+    setMotivationVisible(Array(matches.length).fill(false));
+  }, [matches]);
+
+  const toggleMotivation = (index: number) => {
+    setMotivationVisible((prev) =>
+      prev.map((visible, i) => (i === index ? !visible : visible))
+    );
+    console.log("Click on textarea button");
+  };
 
   return (
     <div className="matches-wrapper">
@@ -72,7 +84,18 @@ export const Matches = () => {
             </div>
 
             <div className="motivation">
-              <button>Vill du lägga till en motivering?</button>
+              <button onClick={() => toggleMotivation(index)}>
+                Vill du lägga till en motivering?
+              </button>
+
+              {motivationVisible[index] && (
+                <textarea
+                  className={`motivation-textarea ${
+                    motivationVisible[index] ? "visible" : ""
+                  }`}
+                  placeholder="Skriv din motivering här..."
+                ></textarea>
+              )}
             </div>
 
             <button className="submit-prediction">Lägg tippning</button>

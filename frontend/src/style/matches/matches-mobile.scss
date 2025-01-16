@@ -42,7 +42,8 @@
       box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
+      justify-content: flex-start;
+      transition: all 0.3s ease-in-out;
 
       .teams {
         display: flex;
@@ -80,6 +81,27 @@
           background-color: #9e9e9e;
           color: white;
           border-radius: 8px;
+        }
+
+        .motivation-textarea {
+          width: 100%;
+          max-width: 100%;
+          border: 1px solid #ccc;
+          border-radius: 8px;
+          font-size: 1rem;
+          resize: none;
+          height: 0;
+          opacity: 0;
+          transform: translateY(-10px);
+          transition: all 0.3s ease-in-out;
+          overflow: hidden;
+
+          &.visible {
+            height: 100px;
+            opacity: 1;
+            transform: translateY(0);
+            margin-bottom: 10px;
+          }
         }
       }
 
