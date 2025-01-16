@@ -1,0 +1,11 @@
+.matches-wrapper {
+  .league-menu {
+    cursor: pointer;
+    transition: box-shadow 0.3s, transform 0.2s;
+
+    &:hover {
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      transform: translateY(-3px);
+    }
+  }
+}
