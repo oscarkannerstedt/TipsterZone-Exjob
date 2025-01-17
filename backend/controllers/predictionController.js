@@ -67,7 +67,7 @@ export const createPrediction = async (req, res) => {
 
     if (existingPrediction) {
       return res.status(400).json({
-        message: "You have already placed a prediciton for this match.",
+        message: "Du har redan lagt en tippning på denna matchen.",
       });
     }
 
@@ -81,7 +81,6 @@ export const createPrediction = async (req, res) => {
 
     await prediction.save();
     res.status(200).json(prediction);
-    console.log("Prediction saved to database: ", prediction);
   } catch (error) {
     console.error("Error while creating prediction", error);
     res.status(500).json({ message: "Server error" });

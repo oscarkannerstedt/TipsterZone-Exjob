@@ -4,7 +4,7 @@ export interface ITeam {
 }
 
 export interface IMatch {
-  match_id: number;
+  id: number;
   homeTeam: ITeam;
   awayTeam: ITeam;
   match_date: string;
