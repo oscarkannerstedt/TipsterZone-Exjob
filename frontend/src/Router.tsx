@@ -7,6 +7,7 @@ import Matches from "./pages/Matches";
 import MyPredicitons from "./pages/MyPredictions";
 import Login from "./pages/Login";
 import SignupUser from "./pages/SignupUser";
+import PrivateRoutes from "./components/PrivateRoutes";
 
 export const router = createBrowserRouter([
   {
