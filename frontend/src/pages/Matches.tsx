@@ -69,9 +69,17 @@ export const Matches = () => {
       .then((response) => {
         alert("Prediction skapad!");
         console.log(response);
+
+        setSelectedOutcomes((prev) => {
+          const newSelectedOutcomes = { ...prev };
+          delete newSelectedOutcomes[matchId];
+          return newSelectedOutcomes;
+        });
+
+        setSummary("");
       })
       .catch((error) => {
-        alert("Något gick fel, var vänlig försök igen om en stund.");
+        alert(error.message);
         console.log("error create predicition", error);
       });
   };
