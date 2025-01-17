@@ -73,9 +73,9 @@ export const Matches = () => {
         {matches.map((match, index) => (
           <div key={index} className="match-card">
             <div className="teams">
-              <div className="home-team">{match.homeTeam.name}</div>
+              <div className="home-team">{match.homeTeam.shortName}</div>
               <p>-</p>
-              <div className="away-team">{match.awayTeam.name}</div>
+              <div className="away-team">{match.awayTeam.shortName}</div>
             </div>
 
             <div className="prediction-options">

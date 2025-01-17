@@ -1,5 +1,6 @@
 export interface ITeam {
   name: string;
+  shortName: string;
 }
 
 export interface IMatch {
