@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { fetchMatchesByLeague } from "../services/matchService";
 import { IMatch } from "../types/Match";
+import { formatTime } from "../utils/formatTime";
 
 export const Matches = () => {
   const [matches, setMatches] = useState<IMatch[]>([]);
@@ -77,6 +78,8 @@ export const Matches = () => {
               <p>-</p>
               <div className="away-team">{match.awayTeam.shortName}</div>
             </div>
+
+            <div className="match-date">{formatTime(match.utcDate)}</div>
 
             <div className="prediction-options">
               <button>1</button>
