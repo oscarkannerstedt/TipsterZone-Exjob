@@ -73,6 +73,10 @@
           width: 25%;
           border-radius: 4px;
           border: 2px solid black;
+
+          &.selected {
+            background-color: #348d59;
+          }
         }
       }
 

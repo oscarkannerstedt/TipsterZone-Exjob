@@ -2,16 +2,22 @@ import { useEffect, useState } from "react";
 import { fetchMatchesByLeague } from "../services/matchService";
 import { IMatch } from "../types/Match";
 import { formatTime } from "../utils/formatTime";
+import { createPrediciton } from "../services/predictionServices";
 
 export const Matches = () => {
   const [matches, setMatches] = useState<IMatch[]>([]);
   const [league, setLeague] = useState<string>("PL");
   const [motivationVisible, setMotivationVisible] = useState<boolean[]>([]);
+  const [selectedOutcomes, setSelectedOutcomes] = useState<{
+    [key: number]: string | null;
+  }>({});
+  const [summary, setSummary] = useState<string>("");
 
   useEffect(() => {
     const fetchMatches = async () => {
       try {
         const fetchedMatches = await fetchMatchesByLeague(league);
+        console.log("Fetched Matches:", fetchedMatches);
         setMatches(fetchedMatches);
       } catch (error) {
         console.log("Error fetching matches", error);
@@ -30,6 +36,53 @@ export const Matches = () => {
       prev.map((visible, i) => (i === index ? !visible : visible))
     );
     console.log("Click on textarea button");
+  };
+
+  const handlePredictionSubmit = (matchId: number) => {
+    const userId = localStorage.getItem("userId");
+
+    console.log("userId", userId);
+
+    if (!userId) {
+      alert("Du måste logga in för att kunna lägga en tippning!");
+      return;
+    }
+
+    const predictedOutcome = selectedOutcomes[matchId];
+
+    if (!predictedOutcome) {
+      alert("Vänligen välj ett resultat!");
+      return;
+    }
+
+    const predicitonData = {
+      user_id: userId,
+      match_id: matchId,
+      predicted_outcome: predictedOutcome,
+      summary: summary,
+      league: league,
+    };
+
+    console.log("match id:", matchId);
+
+    createPrediciton(predicitonData)
+      .then((response) => {
+        alert("Prediction skapad!");
+        console.log(response);
+      })
+      .catch((error) => {
+        alert("Något gick fel, var vänlig försök igen om en stund.");
+        console.log("error create predicition", error);
+      });
+  };
+
+  const handleOutcomeClick = (matchId: number, outcome: string) => {
+    setSelectedOutcomes((prev) => {
+      return {
+        ...prev,
+        [matchId]: prev[matchId] === outcome ? null : outcome,
+      };
+    });
   };
 
   return (
@@ -82,9 +135,24 @@ export const Matches = () => {
             <div className="match-date">{formatTime(match.utcDate)}</div>
 
             <div className="prediction-options">
-              <button>1</button>
-              <button>X</button>
-              <button>2</button>
+              <button
+                onClick={() => handleOutcomeClick(match.id, "1")}
+                className={selectedOutcomes[match.id] === "1" ? "selected" : ""}
+              >
+                1
+              </button>
+              <button
+                onClick={() => handleOutcomeClick(match.id, "X")}
+                className={selectedOutcomes[match.id] === "X" ? "selected" : ""}
+              >
+                X
+              </button>
+              <button
+                onClick={() => handleOutcomeClick(match.id, "2")}
+                className={selectedOutcomes[match.id] === "2" ? "selected" : ""}
+              >
+                2
+              </button>
             </div>
 
             <div className="motivation">
@@ -98,11 +166,18 @@ export const Matches = () => {
                     motivationVisible[index] ? "visible" : ""
                   }`}
                   placeholder="Skriv din motivering här..."
+                  value={summary}
+                  onChange={(e) => setSummary(e.target.value)}
                 ></textarea>
               )}
             </div>
 
-            <button className="submit-prediction">Lägg tippning</button>
+            <button
+              className="submit-prediction"
+              onClick={() => handlePredictionSubmit(match.id)}
+            >
+              Lägg tippning
+            </button>
           </div>
         ))}
       </div>
