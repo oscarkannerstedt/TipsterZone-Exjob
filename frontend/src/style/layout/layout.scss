@@ -5,6 +5,10 @@ body {
   background-size: cover;
 }
 
+main {
+  min-height: calc(100vh - 60px);
+}
+
 .wrapper {
   width: 100%;
   max-width: 1200px;
