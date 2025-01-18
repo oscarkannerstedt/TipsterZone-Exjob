@@ -15,3 +15,10 @@ export interface IMatch {
   };
   competion: string;
 }
+
+export interface IMatchPrediction {
+  id: number;
+  user_id: string;
+  match: IMatch;
+  predictedOutcome: string;
+}
