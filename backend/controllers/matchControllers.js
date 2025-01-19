@@ -141,4 +141,5 @@ export default {
   fetchAllMatches,
   fetchMatchResultFromApi,
   updateMatchResultsAndPredicitons,
+  fetchMatchById,
 };
