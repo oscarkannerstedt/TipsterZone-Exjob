@@ -19,6 +19,7 @@ export interface IMatch {
 export interface IMatchPrediction {
   id: number;
   user_id: string;
-  match: IMatch;
+  match_id: number;
+  match?: IMatch;
   predictedOutcome: string;
 }

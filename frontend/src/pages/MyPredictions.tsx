@@ -23,8 +23,8 @@ export const MyPredicitons = () => {
         //Sort user predictions, matches not started yet comes first
         const sortedPredictions = fetchedPredictions.sort((a, b) => {
           const now = new Date();
-          const matchA = new Date(a.match.utcDate);
-          const matchB = new Date(b.match.utcDate);
+          const matchA = a.match ? new Date(a.match.utcDate) : new Date();
+          const matchB = b.match ? new Date(b.match.utcDate) : new Date();
 
           if (matchA > now && matchB > now) {
             return matchA.getTime() - matchB.getTime();
@@ -66,21 +66,29 @@ export const MyPredicitons = () => {
       {predictions.map((prediction) => (
         <div key={prediction.id} className="userPrediction-card">
           <div className="match-info">
-            <p>
-              {prediction.match.homeTeam.shortName} -{" "}
-              {prediction.match.awayTeam.shortName}
-            </p>
-            <p>{formatTime(prediction.match.utcDate)}</p>
+            {prediction.match ? (
+              <>
+                <p>
+                  {prediction.match.homeTeam.shortName} -{" "}
+                  {prediction.match.awayTeam.shortName}
+                </p>
+                <p>{formatTime(prediction.match.utcDate)}</p>
+              </>
+            ) : (
+              <p>Match data saknas.</p>
+            )}
           </div>
 
           <div className="prediction-info">
             <p>Din tippning: {prediction.predictedOutcome}</p>
-            <p>
-              Resultat:
-              {prediction.match.result
-                ? `${prediction.match.result.home} - ${prediction.match.result.away}`
-                : "Matchen är inte färdig spelad ännu."}
-            </p>
+            {prediction.match && prediction.match.result ? (
+              <p>
+                Resultat: {prediction.match.result.home} -{" "}
+                {prediction.match.result.away}
+              </p>
+            ) : (
+              <p>Matchen är inte färdig spelad ännu.</p>
+            )}
           </div>
         </div>
       ))}
