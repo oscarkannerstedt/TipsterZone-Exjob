@@ -121,6 +121,22 @@ export const updateMatchResultsAndPredicitons = async () => {
   }
 };
 
+//Fetch match from db by match_id
+export const fetchMatchById = async (req, res) => {
+  try {
+    const match = await matchModel.findOne({ match_id: req.params.matchId });
+
+    if (!match) {
+      return res.status(404).json({ message: "Match not found." });
+    }
+
+    res.status(200).json(match);
+  } catch (error) {
+    console.error("Error fetching match:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
 export default {
   fetchAllMatches,
   fetchMatchResultFromApi,
