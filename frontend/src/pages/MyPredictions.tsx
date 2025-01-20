@@ -2,7 +2,10 @@ import { useEffect, useState } from "react";
 import { IMatchPrediction } from "../types/Match";
 import { fetchPredictionsByUserId } from "../services/predictionServices";
 import { formatTime } from "../utils/formatTime";
-import { getPredictionDescription } from "../utils/predictionUtils";
+import {
+  getPredictionDescription,
+  getTimeUntilMatch,
+} from "../utils/predictionUtils";
 
 export const MyPredicitons = () => {
   const [predictions, setPredictions] = useState<IMatchPrediction[]>([]);
@@ -64,53 +67,72 @@ export const MyPredicitons = () => {
     <div className="userPredictions-wrapper">
       <h1>Tippningar</h1>
 
-      {predictions.map((prediction) => (
-        <div
-          key={`${prediction.id}-${prediction.match_id}`}
-          className="userPrediction-card"
-        >
-          <div className="match-info">
-            {prediction.match ? (
-              <>
-                <p className="teams-name">
-                  {prediction.match.homeTeam.name} -{" "}
-                  {prediction.match.awayTeam.name}
+      {predictions.map((prediction) => {
+        const timeUntilMatch = prediction.match
+          ? getTimeUntilMatch(prediction.match.utcDate)
+          : null;
+
+        const isMatchFinished =
+          prediction.match && new Date(prediction.match.utcDate) < new Date();
+        const matchResult = prediction.match?.result;
+
+        return (
+          <div
+            key={`${prediction.id}-${prediction.match_id}`}
+            className="userPrediction-card"
+          >
+            <div className="match-info">
+              {prediction.match ? (
+                <>
+                  <p className="teams-name">
+                    {prediction.match.homeTeam.name} -{" "}
+                    {prediction.match.awayTeam.name}
+                  </p>
+                  <p>{formatTime(prediction.match.utcDate)}</p>
+                </>
+              ) : (
+                <p>Match data saknas.</p>
+              )}
+            </div>
+
+            <div className="prediction-info">
+              {prediction.match ? (
+                <p>
+                  Din tippning:
+                  {getPredictionDescription(
+                    prediction.predicted_outcome,
+                    prediction.match.homeTeam.name,
+                    prediction.match.awayTeam.name
+                  )}
                 </p>
-                <p>{formatTime(prediction.match.utcDate)}</p>
-              </>
-            ) : (
-              <p>Match data saknas.</p>
-            )}
-          </div>
+              ) : (
+                <p>Din tippning: Ingen tippning hittades.</p>
+              )}
+              {prediction.summary && <p>Motivering: {prediction.summary}</p>}
 
-          <div className="prediction-info">
-            {prediction.match ? (
-              <p>
-                Din tippning:
-                {getPredictionDescription(
-                  prediction.predicted_outcome,
-                  prediction.match.homeTeam.name,
-                  prediction.match.awayTeam.name
-                )}
-              </p>
-            ) : (
-              <p>Din tippning: Ingen tippning hittades.</p>
-            )}
-            {prediction.summary && <p>Motivering: {prediction.summary}</p>}
-
-            {prediction.match &&
-            prediction.match.status === "FINISHED" &&
-            prediction.match.result ? (
-              <p>
-                Resultat: {prediction.match.result.home} -{" "}
-                {prediction.match.result.away}
-              </p>
-            ) : (
-              <p>Matchen är inte färdig spelad ännu.</p>
-            )}
+              {prediction.match ? (
+                isMatchFinished ? (
+                  matchResult ? (
+                    <p>
+                      Resultat: {matchResult.home} - {matchResult.away}
+                    </p>
+                  ) : (
+                    <p>Resultat saknas.</p>
+                  )
+                ) : timeUntilMatch && timeUntilMatch > 20 ? (
+                  <button className="delete-prediction-button">
+                    Ta bort tippning
+                  </button>
+                ) : (
+                  <p>Matchen är inte färdig spelad ännu.</p>
+                )
+              ) : (
+                <p>Matchdata saknas.</p>
+              )}
+            </div>
           </div>
-        </div>
-      ))}
+        );
+      })}
     </div>
   );
 };
