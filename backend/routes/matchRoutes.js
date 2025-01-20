@@ -5,6 +5,8 @@ const router = express.Router();
 
 router.get("/", matchControllers.fetchAllMatches);
 
+router.get("/:matchId", matchControllers.fetchMatchById);
+
 // Denna är endast under utveckling och skall tas bort sen.
 router.get("/update-finished-matches", async (req, res) => {
   try {

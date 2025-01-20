@@ -48,7 +48,7 @@ const fetchAllMatches = async (req, res) => {
   }
 };
 
-// Its works to get match with specifik id from api but after filter FINISHED it dont find it.
+// Fetch matches from API and filter FINISHED
 const fetchMatchResultFromApi = async (league) => {
   const API_KEY = process.env.API_KEY;
   const url = `${API_BASE_URL}competitions/${league}/matches`;
@@ -86,6 +86,16 @@ export const updateMatchResultsAndPredicitons = async () => {
 
         if (dbMatch) {
           console.log("Match found in database:", dbMatch);
+
+          //Controll if match_date has been changed
+          if (
+            new Date(dbMatch.match_date).getTime() !==
+            new Date(match.utcDate).getTime()
+          ) {
+            dbMatch.match_date = match.utcDate;
+            await dbMatch.save();
+          }
+
           if (dbMatch.status !== "FINISHED" && match.status === "FINISHED") {
             console.log("Updating match with ID:", dbMatch.match_id);
             dbMatch.status = "FINISHED";
@@ -111,8 +121,25 @@ export const updateMatchResultsAndPredicitons = async () => {
   }
 };
 
+//Fetch match from db by match_id
+export const fetchMatchById = async (req, res) => {
+  try {
+    const match = await matchModel.findOne({ match_id: req.params.matchId });
+
+    if (!match) {
+      return res.status(404).json({ message: "Match not found." });
+    }
+
+    res.status(200).json(match);
+  } catch (error) {
+    console.error("Error fetching match:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
 export default {
   fetchAllMatches,
   fetchMatchResultFromApi,
   updateMatchResultsAndPredicitons,
+  fetchMatchById,
 };
