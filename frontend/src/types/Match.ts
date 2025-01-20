@@ -14,6 +14,7 @@ export interface IMatch {
     away: number;
   };
   competion: string;
+  status: string;
 }
 
 export interface IMatchPrediction {
@@ -21,5 +22,20 @@ export interface IMatchPrediction {
   user_id: string;
   match_id: number;
   match?: IMatch;
-  predictedOutcome: string;
+  predicted_outcome: string;
+  summary?: string;
+}
+
+export interface IDatabaseMatch {
+  _id: string;
+  match_id: number;
+  team_home: string;
+  team_away: string;
+  match_date: string;
+  status: string;
+  competition: string;
+  result?: {
+    home: number;
+    away: number;
+  };
 }

@@ -64,13 +64,16 @@ export const MyPredicitons = () => {
       <h1>Mina tippningar</h1>
 
       {predictions.map((prediction) => (
-        <div key={prediction.id} className="userPrediction-card">
+        <div
+          key={`${prediction.id}-${prediction.match_id}`}
+          className="userPrediction-card"
+        >
           <div className="match-info">
             {prediction.match ? (
               <>
                 <p>
-                  {prediction.match.homeTeam.shortName} -{" "}
-                  {prediction.match.awayTeam.shortName}
+                  {prediction.match.homeTeam.name} -{" "}
+                  {prediction.match.awayTeam.name}
                 </p>
                 <p>{formatTime(prediction.match.utcDate)}</p>
               </>
@@ -80,8 +83,12 @@ export const MyPredicitons = () => {
           </div>
 
           <div className="prediction-info">
-            <p>Din tippning: {prediction.predictedOutcome}</p>
-            {prediction.match && prediction.match.result ? (
+            <p>Din tippning: {prediction.predicted_outcome}</p>
+            {prediction.summary && <p>Motivering: {prediction.summary}</p>}
+
+            {prediction.match &&
+            prediction.match.status === "FINISHED" &&
+            prediction.match.result ? (
               <p>
                 Resultat: {prediction.match.result.home} -{" "}
                 {prediction.match.result.away}

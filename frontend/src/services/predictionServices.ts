@@ -1,5 +1,5 @@
 import axios from "axios";
-import { IMatch, IMatchPrediction } from "../types/Match";
+import { IDatabaseMatch, IMatch, IMatchPrediction } from "../types/Match";
 
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:10000";
 
@@ -39,11 +39,30 @@ export const fetchPredictionsByUserId = async (
   const predictionsWithMatchData = await Promise.all(
     predictions.map(async (prediction: IMatchPrediction) => {
       console.log("Current prediction:", prediction);
-      const matchData = await fetchMatchById(prediction.match_id);
+      const matchData: IDatabaseMatch = await fetchMatchById(
+        prediction.match_id
+      );
+
+      // const updatedMatchData = {
+      //   ...matchData,
+      //   homeTeamName: matchData.homeTeam.name,
+      //   awayTeamName: matchData.awayTeam.name,
+      // };
+
+      const updatedMatchData: IMatch = {
+        id: matchData.match_id,
+        homeTeam: { name: matchData.team_home, shortName: matchData.team_home },
+        awayTeam: { name: matchData.team_away, shortName: matchData.team_away },
+        match_date: matchData.match_date,
+        utcDate: matchData.match_date,
+        status: matchData.status,
+        competion: matchData.competition,
+        result: matchData.result,
+      };
 
       return {
         ...prediction,
-        match: matchData,
+        match: updatedMatchData,
       };
     })
   );
@@ -52,7 +71,9 @@ export const fetchPredictionsByUserId = async (
 };
 
 //fetch match from db with match_id
-export const fetchMatchById = async (matchId: number): Promise<IMatch> => {
+export const fetchMatchById = async (
+  matchId: number
+): Promise<IDatabaseMatch> => {
   const response = await axios.get(`${API_URL}/api/matches/${matchId}`);
   return response.data;
 };
