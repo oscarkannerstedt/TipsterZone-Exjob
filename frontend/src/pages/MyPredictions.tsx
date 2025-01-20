@@ -121,7 +121,7 @@ export const MyPredicitons = () => {
                   )
                 ) : timeUntilMatch && timeUntilMatch > 20 ? (
                   <button className="delete-prediction-button">
-                    Ta bort tippning
+                    Radera Tippning
                   </button>
                 ) : (
                   <p>Matchen är inte färdig spelad ännu.</p>
