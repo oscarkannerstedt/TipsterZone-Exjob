@@ -61,7 +61,7 @@ export const MyPredicitons = () => {
 
   return (
     <div className="userPredictions-wrapper">
-      <h1>Mina tippningar</h1>
+      <h1>Tippningar</h1>
 
       {predictions.map((prediction) => (
         <div
@@ -71,7 +71,7 @@ export const MyPredicitons = () => {
           <div className="match-info">
             {prediction.match ? (
               <>
-                <p>
+                <p className="teams-name">
                   {prediction.match.homeTeam.name} -{" "}
                   {prediction.match.awayTeam.name}
                 </p>
