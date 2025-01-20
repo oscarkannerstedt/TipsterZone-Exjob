@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { IMatchPrediction } from "../types/Match";
 import { fetchPredictionsByUserId } from "../services/predictionServices";
 import { formatTime } from "../utils/formatTime";
+import { getPredictionDescription } from "../utils/predictionUtils";
 
 export const MyPredicitons = () => {
   const [predictions, setPredictions] = useState<IMatchPrediction[]>([]);
@@ -83,7 +84,18 @@ export const MyPredicitons = () => {
           </div>
 
           <div className="prediction-info">
-            <p>Din tippning: {prediction.predicted_outcome}</p>
+            {prediction.match ? (
+              <p>
+                Din tippning:
+                {getPredictionDescription(
+                  prediction.predicted_outcome,
+                  prediction.match.homeTeam.name,
+                  prediction.match.awayTeam.name
+                )}
+              </p>
+            ) : (
+              <p>Din tippning: Ingen tippning hittades.</p>
+            )}
             {prediction.summary && <p>Motivering: {prediction.summary}</p>}
 
             {prediction.match &&
