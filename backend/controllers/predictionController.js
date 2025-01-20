@@ -47,8 +47,8 @@ export const createPrediction = async (req, res) => {
       //Save match in database
       match = new MatchModel({
         match_id: foundMatch.id,
-        team_home: foundMatch.homeTeam.name,
-        team_away: foundMatch.awayTeam.name,
+        team_home: foundMatch.homeTeam.shortName,
+        team_away: foundMatch.awayTeam.shortName,
         match_date: foundMatch.utcDate,
         status: foundMatch.status,
         result: foundMatch.status,
