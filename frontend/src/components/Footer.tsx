@@ -1,4 +1,8 @@
+import { useHandleNavigation } from "../utils/navigationUtils";
+
 export const Footer = () => {
+  const handleNavigation = useHandleNavigation();
+
   return (
     <>
       <nav aria-label="Footer navigation">
