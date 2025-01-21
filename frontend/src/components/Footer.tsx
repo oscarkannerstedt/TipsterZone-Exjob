@@ -1,8 +1,8 @@
 export const Footer = () => {
   return (
-    <section className="footer-wrapper">
+    <>
       <nav aria-label="Footer navigation">
-        <ul className="nav-items">
+        <ul>
           <li>Hem</li>
           <li>Matcher</li>
           <li>Mina Tippningar</li>
@@ -12,7 +12,8 @@ export const Footer = () => {
       </nav>
 
       <div className="footer-info">
-        <p>
+        <h2>tipsterzone.se</h2>
+        <p className="text-info">
           Tippning är en rolig aktivitet och är inte kopplad till spel om
           pengar. Spel om pengar kan leda till spelproblem. Behöver du hjälp?
           Kontakta{" "}
@@ -25,9 +26,11 @@ export const Footer = () => {
           </a>
           .
         </p>
-        <p>&copy; 2025 TipsterZone. Alla rättigheter förbehållna.</p>
+        <p className="copyright-text">
+          &copy; 2025 <span>tipsterzone.se</span>. Alla rättigheter förbehållna.
+        </p>
       </div>
-    </section>
+    </>
   );
 };
 
