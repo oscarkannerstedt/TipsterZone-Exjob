@@ -30,18 +30,22 @@ export const MyPredicitons = () => {
         //Sort user predictions, matches not started yet comes first
         const sortedPredictions = fetchedPredictions.sort((a, b) => {
           const now = new Date();
-          const matchA = a.match ? new Date(a.match.utcDate) : new Date();
-          const matchB = b.match ? new Date(b.match.utcDate) : new Date();
+          const matchA = a.match ? new Date(a.match.utcDate) : new Date(0);
+          const matchB = b.match ? new Date(b.match.utcDate) : new Date(0);
 
           if (matchA > now && matchB > now) {
-            return matchA.getTime() - matchB.getTime();
-          } else if (matchA > now) {
-            return -1;
-          } else if (matchB > now) {
-            return 1;
-          } else {
-            return matchA.getTime() - matchB.getTime();
+            return (
+              new Date(b.created_at).getTime() -
+              new Date(a.created_at).getTime()
+            );
           }
+
+          if (matchA > now) return -1;
+          if (matchB > now) return 1;
+
+          return (
+            new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+          );
         });
 
         setPredictions(sortedPredictions);

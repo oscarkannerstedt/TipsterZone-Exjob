@@ -25,6 +25,7 @@ export interface IMatchPrediction {
   match?: IMatch;
   predicted_outcome: string;
   summary?: string;
+  created_at: string;
 }
 
 export interface IDatabaseMatch {
