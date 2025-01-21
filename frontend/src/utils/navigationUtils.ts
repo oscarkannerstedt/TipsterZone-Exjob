@@ -5,5 +5,6 @@ export const useHandleNavigation = () => {
 
   return (path: string) => {
     navigate(path);
+    window.scrollTo(0, 0);
   };
 };
