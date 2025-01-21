@@ -7,11 +7,13 @@ export const Footer = () => {
     <>
       <nav aria-label="Footer navigation">
         <ul>
-          <li>Hem</li>
-          <li>Matcher</li>
-          <li>Mina Tippningar</li>
-          <li>Top Lista</li>
-          <li>Regler</li>
+          <li onClick={() => handleNavigation("/")}>Hem</li>
+          <li onClick={() => handleNavigation("/matches")}>Matcher</li>
+          <li onClick={() => handleNavigation("/mypredictions")}>
+            Mina Tippningar
+          </li>
+          <li onClick={() => handleNavigation("/leaderboard")}>Top Lista</li>
+          <li onClick={() => handleNavigation("/rules")}>Regler</li>
         </ul>
       </nav>
 
