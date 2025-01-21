@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 import { IMatchPrediction } from "../types/Match";
-import { fetchPredictionsByUserId } from "../services/predictionServices";
+import {
+  deletePredictionByID,
+  fetchPredictionsByUserId,
+} from "../services/predictionServices";
 import { formatTime } from "../utils/formatTime";
 import {
   getPredictionDescription,
@@ -63,6 +66,27 @@ export const MyPredicitons = () => {
     return <p>Inga tippningar hittades.</p>;
   }
 
+  const handleDeletePrediction = async (
+    predictionId: string,
+    setPredictions: React.Dispatch<React.SetStateAction<IMatchPrediction[]>>
+  ) => {
+    console.log("Deleting prediction with id:", predictionId);
+    if (!window.confirm("Är du säker på att du vill radera tippningen?")) {
+      return;
+    }
+
+    try {
+      await deletePredictionByID(predictionId);
+      alert("Tippningen raderades.");
+      setPredictions((prevPredictions) =>
+        prevPredictions.filter((p) => p.id !== predictionId)
+      );
+    } catch (error) {
+      console.error("Error while deleting prediction:", error);
+      alert("Något gick fel vid borttagning av tippningen.");
+    }
+  };
+
   return (
     <div className="userPredictions-wrapper">
       <h1>Tippningar</h1>
@@ -120,7 +144,12 @@ export const MyPredicitons = () => {
                     <p>Resultat saknas.</p>
                   )
                 ) : timeUntilMatch && timeUntilMatch > 20 ? (
-                  <button className="delete-prediction-button">
+                  <button
+                    className="delete-prediction-button"
+                    onClick={() =>
+                      handleDeletePrediction(prediction._id, setPredictions)
+                    }
+                  >
                     Radera Tippning
                   </button>
                 ) : (
