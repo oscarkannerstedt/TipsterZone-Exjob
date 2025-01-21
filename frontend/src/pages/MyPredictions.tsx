@@ -77,9 +77,8 @@ export const MyPredicitons = () => {
 
     try {
       await deletePredictionByID(predictionId);
-      alert("Tippningen raderades.");
       setPredictions((prevPredictions) =>
-        prevPredictions.filter((p) => p.id !== predictionId)
+        prevPredictions.filter((prediction) => prediction._id !== predictionId)
       );
     } catch (error) {
       console.error("Error while deleting prediction:", error);
