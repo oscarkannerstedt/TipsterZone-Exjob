@@ -18,12 +18,14 @@ export interface IMatch {
 }
 
 export interface IMatchPrediction {
-  id: number;
+  _id: string;
+  id: string;
   user_id: string;
   match_id: number;
   match?: IMatch;
   predicted_outcome: string;
   summary?: string;
+  created_at: string;
 }
 
 export interface IDatabaseMatch {

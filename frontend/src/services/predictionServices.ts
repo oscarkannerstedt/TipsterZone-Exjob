@@ -43,12 +43,6 @@ export const fetchPredictionsByUserId = async (
         prediction.match_id
       );
 
-      // const updatedMatchData = {
-      //   ...matchData,
-      //   homeTeamName: matchData.homeTeam.name,
-      //   awayTeamName: matchData.awayTeam.name,
-      // };
-
       const updatedMatchData: IMatch = {
         id: matchData.match_id,
         homeTeam: { name: matchData.team_home, shortName: matchData.team_home },
@@ -76,4 +70,24 @@ export const fetchMatchById = async (
 ): Promise<IDatabaseMatch> => {
   const response = await axios.get(`${API_URL}/api/matches/${matchId}`);
   return response.data;
+};
+
+//Delete prediciton
+export const deletePredictionByID = async (predictionId: string) => {
+  try {
+    const response = await axios.delete(
+      `${API_URL}/api/predictions/${predictionId}`
+    );
+    if (response.status !== 200) {
+      throw new Error(response.data?.message || "Failed to delete prediction.");
+    }
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      if (error.response && error.response.data?.message) {
+        throw new Error(error.response.data.message);
+      }
+    }
+
+    throw new Error("Failed to delete prediction.");
+  }
 };

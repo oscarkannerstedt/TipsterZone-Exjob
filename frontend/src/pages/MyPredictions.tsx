@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 import { IMatchPrediction } from "../types/Match";
-import { fetchPredictionsByUserId } from "../services/predictionServices";
+import {
+  deletePredictionByID,
+  fetchPredictionsByUserId,
+} from "../services/predictionServices";
 import { formatTime } from "../utils/formatTime";
 import {
   getPredictionDescription,
@@ -27,18 +30,22 @@ export const MyPredicitons = () => {
         //Sort user predictions, matches not started yet comes first
         const sortedPredictions = fetchedPredictions.sort((a, b) => {
           const now = new Date();
-          const matchA = a.match ? new Date(a.match.utcDate) : new Date();
-          const matchB = b.match ? new Date(b.match.utcDate) : new Date();
+          const matchA = a.match ? new Date(a.match.utcDate) : new Date(0);
+          const matchB = b.match ? new Date(b.match.utcDate) : new Date(0);
 
           if (matchA > now && matchB > now) {
-            return matchA.getTime() - matchB.getTime();
-          } else if (matchA > now) {
-            return -1;
-          } else if (matchB > now) {
-            return 1;
-          } else {
-            return matchA.getTime() - matchB.getTime();
+            return (
+              new Date(b.created_at).getTime() -
+              new Date(a.created_at).getTime()
+            );
           }
+
+          if (matchA > now) return -1;
+          if (matchB > now) return 1;
+
+          return (
+            new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+          );
         });
 
         setPredictions(sortedPredictions);
@@ -62,6 +69,26 @@ export const MyPredicitons = () => {
   if (predictions.length === 0) {
     return <p>Inga tippningar hittades.</p>;
   }
+
+  const handleDeletePrediction = async (
+    predictionId: string,
+    setPredictions: React.Dispatch<React.SetStateAction<IMatchPrediction[]>>
+  ) => {
+    console.log("Deleting prediction with id:", predictionId);
+    if (!window.confirm("Är du säker på att du vill radera tippningen?")) {
+      return;
+    }
+
+    try {
+      await deletePredictionByID(predictionId);
+      setPredictions((prevPredictions) =>
+        prevPredictions.filter((prediction) => prediction._id !== predictionId)
+      );
+    } catch (error) {
+      console.error("Error while deleting prediction:", error);
+      alert("Något gick fel vid borttagning av tippningen.");
+    }
+  };
 
   return (
     <div className="userPredictions-wrapper">
@@ -120,7 +147,12 @@ export const MyPredicitons = () => {
                     <p>Resultat saknas.</p>
                   )
                 ) : timeUntilMatch && timeUntilMatch > 20 ? (
-                  <button className="delete-prediction-button">
+                  <button
+                    className="delete-prediction-button"
+                    onClick={() =>
+                      handleDeletePrediction(prediction._id, setPredictions)
+                    }
+                  >
                     Radera Tippning
                   </button>
                 ) : (
