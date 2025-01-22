@@ -110,12 +110,17 @@
 @media (min-width: 600px) {
   .leaderboard-container {
     .leaderboard-header {
+      font-size: 1.3rem;
       .rank-header {
         margin-right: 20px;
       }
 
       .user-header {
         margin-right: 20px;
+      }
+
+      .points-header {
+        width: 55px;
       }
     }
   }
