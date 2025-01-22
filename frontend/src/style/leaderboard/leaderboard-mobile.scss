@@ -1,0 +1,122 @@
+.leaderboard-container {
+  min-height: calc(100vh - 60px);
+  padding: 20px;
+  background-color: #f9f9f9;
+
+  h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 1.7rem;
+  }
+
+  .leaderboard-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+
+    .header-box {
+      text-align: center;
+      padding: 5px 10px;
+      background-color: #275caa;
+      border-radius: 8px;
+      padding: 10px;
+      margin-bottom: 15px;
+    }
+
+    .rank-header {
+      width: 50px;
+      margin-right: 8px;
+    }
+
+    .user-header {
+      flex: 1;
+      margin-right: 8px;
+    }
+
+    .points-header {
+      width: 40px;
+    }
+  }
+
+  .leaderboard-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+
+    .leaderboard-card {
+      display: flex;
+      align-items: center;
+      background-color: #ffffff;
+      border: 1px solid black;
+      border-radius: 8px;
+      padding: 10px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+      .rank-box {
+        width: 50px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #275caa;
+        color: white;
+        font-weight: bold;
+        font-size: 1.2rem;
+        border-radius: 8px;
+      }
+
+      .user-info {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        align-items: center;
+
+        .username {
+          font-weight: bold;
+          font-size: 1rem;
+          color: #333;
+          margin: 0;
+        }
+
+        .user-stars {
+          display: flex;
+          gap: 3px;
+
+          .star {
+            color: #ccc;
+            font-size: 1rem;
+          }
+
+          .star-filled {
+            color: #ffc107;
+          }
+        }
+      }
+
+      .points-box {
+        width: 25px;
+        text-align: center;
+        font-weight: bold;
+        font-size: 1rem;
+        margin-right: 5px;
+      }
+    }
+  }
+}
+
+@media (min-width: 600px) {
+  .leaderboard-container {
+    .leaderboard-header {
+      .rank-header {
+        margin-right: 20px;
+      }
+
+      .user-header {
+        margin-right: 20px;
+      }
+    }
+  }
+}

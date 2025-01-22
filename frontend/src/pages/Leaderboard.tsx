@@ -24,34 +24,42 @@ export const Leaderboard = () => {
   }
 
   return (
-    <div>
+    <div className="leaderboard-container">
       <h1>Topp Lista</h1>
 
       {leaderboard.length > 0 ? (
-        <div className="leaderboard-cards">
-          {leaderboard.map((user) => (
-            <div key={user.rank} className="leaderboard-card">
-              <div className="rank-box">{user.rank}</div>
+        <div>
+          <div className="leaderboard-header">
+            <div className="header-box rank-header">Rank</div>
+            <div className="header-box user-header">Användarnamn</div>
+            <div className="header-box points-header">Poäng</div>
+          </div>
 
-              <div className="user-info">
-                <p className="username">{user.username}</p>
-                <div className="user-stars">
-                  {Array.from({ length: 5 }, (_, i) => (
-                    <span
-                      key={i}
-                      className={`star ${
-                        i < Math.floor(user.total_points / 20) ? "filled" : ""
-                      }`}
-                    >
-                      ★
-                    </span>
-                  ))}
+          <div className="leaderboard-cards">
+            {leaderboard.map((user) => (
+              <div key={user.rank} className="leaderboard-card">
+                <div className="rank-box">{user.rank}</div>
+
+                <div className="user-info">
+                  <p className="username">{user.username}</p>
+                  <div className="user-stars">
+                    {Array.from({ length: 5 }, (_, i) => (
+                      <span
+                        key={i}
+                        className={`star ${
+                          i < Math.floor(user.total_points / 20) ? "filled" : ""
+                        }`}
+                      >
+                        ★
+                      </span>
+                    ))}
+                  </div>
                 </div>
-              </div>
 
-              <div className="point-box">{user.total_points}</div>
-            </div>
-          ))}
+                <div className="points-box">{user.total_points}</div>
+              </div>
+            ))}
+          </div>
         </div>
       ) : (
         <p>Laddar Top Lista...</p>
