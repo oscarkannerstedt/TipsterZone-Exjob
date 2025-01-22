@@ -47,7 +47,7 @@ export const Leaderboard = () => {
                       <span
                         key={i}
                         className={`star ${
-                          i < Math.floor(user.total_points / 20) ? "filled" : ""
+                          i < Math.ceil((30 - user.rank) / 6) ? "filled" : ""
                         }`}
                       >
                         ★
