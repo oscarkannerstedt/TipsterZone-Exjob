@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { fetchLeaderboard } from "../services/leaderboardServices";
+import { ILeaderboardUser } from "../types/Leaderboard";
 
 export const Leaderboard = () => {
-  const [leaderboard, setLeaderboard] = useState([]);
+  const [leaderboard, setLeaderboard] = useState<ILeaderboardUser[]>([]);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -27,13 +28,31 @@ export const Leaderboard = () => {
       <h1>Topp Lista</h1>
 
       {leaderboard.length > 0 ? (
-        <ul>
+        <div className="leaderboard-cards">
           {leaderboard.map((user) => (
-            <li key={user.rank}>
-              #{user.rank} {user.username} - {user.total_points} poäng
-            </li>
+            <div key={user.rank} className="leaderboard-card">
+              <div className="rank-box">{user.rank}</div>
+
+              <div className="user-info">
+                <p className="username">{user.username}</p>
+                <div className="user-stars">
+                  {Array.from({ length: 5 }, (_, i) => (
+                    <span
+                      key={i}
+                      className={`star ${
+                        i < Math.floor(user.total_points / 20) ? "filled" : ""
+                      }`}
+                    >
+                      ★
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              <div className="point-box">{user.total_points}</div>
+            </div>
           ))}
-        </ul>
+        </div>
       ) : (
         <p>Laddar Top Lista...</p>
       )}
