@@ -1,10 +1,13 @@
 import { useEffect, useState } from "react";
 import { fetchLeaderboard } from "../services/leaderboardServices";
 import { ILeaderboardUser } from "../types/Leaderboard";
+import { useHandleNavigation } from "../utils/navigationUtils";
 
 export const Leaderboard = () => {
   const [leaderboard, setLeaderboard] = useState<ILeaderboardUser[]>([]);
   const [error, setError] = useState<string | null>(null);
+
+  const handleNavigation = useHandleNavigation();
 
   useEffect(() => {
     const getLeaderboard = async () => {
@@ -41,7 +44,12 @@ export const Leaderboard = () => {
                 <div className="rank-box">{user.rank}</div>
 
                 <div className="user-info">
-                  <p className="username">{user.username}</p>
+                  <p
+                    className="username"
+                    onClick={() => handleNavigation("/userpredictions")}
+                  >
+                    {user.username}
+                  </p>
                   <div className="user-stars">
                     {Array.from({ length: 5 }, (_, i) => (
                       <span
