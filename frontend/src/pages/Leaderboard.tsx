@@ -46,7 +46,9 @@ export const Leaderboard = () => {
                 <div className="user-info">
                   <p
                     className="username"
-                    onClick={() => handleNavigation("/userpredictions")}
+                    onClick={() =>
+                      handleNavigation("`/userpredictions/${user.userId}`")
+                    }
                   >
                     {user.username}
                   </p>

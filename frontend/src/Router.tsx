@@ -45,7 +45,7 @@ export const router = createBrowserRouter([
         element: <Rules />,
       },
       {
-        path: "/userpredictions",
+        path: "/userpredictions/:userId",
         element: <LeaderboardUsersPredictions />,
       },
     ],
