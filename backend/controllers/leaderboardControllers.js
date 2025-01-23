@@ -24,6 +24,7 @@ export const getLeaderboard = async (req, res) => {
       rank: index + 1,
       username: user.username,
       total_points: user.total_points,
+      userId: user._id,
     }));
 
     //Save leaderboard in cache

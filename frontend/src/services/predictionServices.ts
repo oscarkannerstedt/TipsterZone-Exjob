@@ -3,6 +3,7 @@ import { IDatabaseMatch, IMatch, IMatchPrediction } from "../types/Match";
 
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:10000";
 
+//Create prediction
 export const createPrediciton = async (prediction: {
   user_id: string;
   match_id: number;
@@ -27,6 +28,7 @@ export const createPrediciton = async (prediction: {
   }
 };
 
+//fetch predictions by userId
 export const fetchPredictionsByUserId = async (
   userId: string
 ): Promise<IMatchPrediction[]> => {
