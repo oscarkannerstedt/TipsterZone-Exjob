@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { IMatchPrediction } from "../types/Match";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { fetchPredictionsByUserId } from "../services/predictionServices";
 import { getPredictionDescription } from "../utils/predictionUtils";
 import { formatTime } from "../utils/formatTime";
@@ -9,6 +9,8 @@ export const LeaderboardUsersPredictions = () => {
   const [predictions, setPredictions] = useState<IMatchPrediction[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const { userId } = useParams<{ userId: string }>();
+  const location = useLocation();
+  const { username, total_points, rank } = location.state || {};
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -20,6 +22,7 @@ export const LeaderboardUsersPredictions = () => {
         setError(null);
 
         const data = await fetchPredictionsByUserId(userId);
+        console.log(data);
 
         const sortedPredictions = data.sort((a, b) => {
           const now = new Date();
@@ -63,9 +66,32 @@ export const LeaderboardUsersPredictions = () => {
     return <p>{error}</p>;
   }
 
+  // Function to render the star rating based on the user's rank
+  const renderStars = (rank: number) => {
+    const stars = Math.ceil((30 - rank) / 6);
+    return (
+      <div className="user-stars">
+        {Array.from({ length: 5 }, (_, i) => (
+          <span key={i} className={`star ${i < stars ? "filled" : ""}`}>
+            ★
+          </span>
+        ))}
+      </div>
+    );
+  };
+
   return (
     <div className="leaderboard-predictions-wrapper">
-      <h1>Tippningar</h1>
+      <div className="user-profile-container">
+        <h2>{username}</h2>
+        <p>{renderStars(rank)}</p>
+        <h3>
+          Rank: <span>{rank}</span>
+        </h3>
+        <h4>
+          Poäng: <span>{total_points}</span>
+        </h4>
+      </div>
 
       {predictions.map((prediction) => {
         const isMatchFinished =

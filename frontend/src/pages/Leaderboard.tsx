@@ -47,7 +47,13 @@ export const Leaderboard = () => {
                   <p
                     className="username"
                     onClick={() =>
-                      handleNavigation(`/userpredictions/${user.userId}`)
+                      handleNavigation(`/userpredictions/${user.userId}`, {
+                        state: {
+                          username: user.username,
+                          total_points: user.total_points,
+                          rank: user.rank,
+                        },
+                      })
                     }
                   >
                     {user.username}
