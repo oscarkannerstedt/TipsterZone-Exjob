@@ -1,7 +1,14 @@
-@media (min-width: 1024px) {
+@media (min-width: 990px) {
   .leaderboard-predictions-wrapper {
-    h1 {
-      font-size: 1.8rem;
+    .user-profile-container {
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      gap: 20px;
+
+      p {
+        margin-left: -5px;
+      }
     }
 
     .leaderboard-prediction-card {
