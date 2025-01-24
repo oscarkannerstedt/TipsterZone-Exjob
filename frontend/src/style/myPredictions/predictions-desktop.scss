@@ -1,21 +1,23 @@
-.userPredictions-wrapper {
-  h1 {
-    font-size: 1.8rem;
-  }
+@media (min-width: 1024px) {
+  .userPredictions-wrapper {
+    h1 {
+      font-size: 1.8rem;
+    }
 
-  .userPrediction-card {
-    .prediction-info {
-      font-size: 1.1rem;
-      .delete-prediction-button {
-        cursor: pointer;
-        transition: background-color 0.3s ease, transform 0.2s ease;
+    .userPrediction-card {
+      .prediction-info {
+        font-size: 1.1rem;
+        .delete-prediction-button {
+          cursor: pointer;
+          transition: background-color 0.3s ease, transform 0.2s ease;
 
-        &:hover {
-          background-color: #c00a17;
-        }
+          &:hover {
+            background-color: #c00a17;
+          }
 
-        &:active {
-          background-color: #80000e;
+          &:active {
+            background-color: #80000e;
+          }
         }
       }
     }
