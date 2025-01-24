@@ -4,6 +4,7 @@ import { useLocation, useParams } from "react-router-dom";
 import { fetchPredictionsByUserId } from "../services/predictionServices";
 import { getPredictionDescription } from "../utils/predictionUtils";
 import { formatTime } from "../utils/formatTime";
+import { useHandleNavigation } from "../utils/navigationUtils";
 
 export const LeaderboardUsersPredictions = () => {
   const [predictions, setPredictions] = useState<IMatchPrediction[]>([]);
@@ -12,6 +13,8 @@ export const LeaderboardUsersPredictions = () => {
   const location = useLocation();
   const { username, total_points, rank } = location.state || {};
   const [error, setError] = useState<string | null>(null);
+
+  const handleNavigation = useHandleNavigation();
 
   useEffect(() => {
     if (!userId) return;
@@ -84,6 +87,10 @@ export const LeaderboardUsersPredictions = () => {
 
   return (
     <div className="leaderboard-predictions-wrapper">
+      <button className="go-back-button" onClick={() => handleNavigation()}>
+        ← Tillbaka
+      </button>
+
       <div className="user-profile-container">
         <h2>{username}</h2>
         <p>{renderStars(rank)}</p>
