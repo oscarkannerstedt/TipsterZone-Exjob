@@ -3,6 +3,17 @@
   background-color: #f9f9f9;
   padding: 1rem;
 
+  .go-back-button {
+    background: none;
+    border: none;
+    color: black;
+    font-size: 1rem;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
   .user-profile-container {
     display: flex;
     flex-direction: column;
