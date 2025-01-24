@@ -40,24 +40,23 @@ export const Leaderboard = () => {
 
           <div className="leaderboard-cards">
             {leaderboard.map((user) => (
-              <div key={user.rank} className="leaderboard-card">
+              <div
+                key={user.rank}
+                className="leaderboard-card"
+                onClick={() =>
+                  handleNavigation(`/userpredictions/${user.userId}`, {
+                    state: {
+                      username: user.username,
+                      total_points: user.total_points,
+                      rank: user.rank,
+                    },
+                  })
+                }
+              >
                 <div className="rank-box">{user.rank}</div>
 
                 <div className="user-info">
-                  <p
-                    className="username"
-                    onClick={() =>
-                      handleNavigation(`/userpredictions/${user.userId}`, {
-                        state: {
-                          username: user.username,
-                          total_points: user.total_points,
-                          rank: user.rank,
-                        },
-                      })
-                    }
-                  >
-                    {user.username}
-                  </p>
+                  <p className="username">{user.username}</p>
                   <div className="user-stars">
                     {Array.from({ length: 5 }, (_, i) => (
                       <span

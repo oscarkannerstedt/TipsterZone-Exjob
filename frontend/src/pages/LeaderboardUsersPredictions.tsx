@@ -70,13 +70,15 @@ export const LeaderboardUsersPredictions = () => {
   const renderStars = (rank: number) => {
     const stars = Math.ceil((30 - rank) / 6);
     return (
-      <div className="user-stars">
-        {Array.from({ length: 5 }, (_, i) => (
-          <span key={i} className={`star ${i < stars ? "filled" : ""}`}>
-            ★
-          </span>
-        ))}
-      </div>
+      <>
+        <div className="user-stars">
+          {Array.from({ length: 5 }, (_, i) => (
+            <span key={i} className={`star ${i < stars ? "filled" : ""}`}>
+              ★
+            </span>
+          ))}
+        </div>
+      </>
     );
   };
 
