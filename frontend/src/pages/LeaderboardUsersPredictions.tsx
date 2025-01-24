@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { IMatchPrediction } from "../types/Match";
 import { useParams } from "react-router-dom";
 import { fetchPredictionsByUserId } from "../services/predictionServices";
+import { getPredictionDescription } from "../utils/predictionUtils";
+import { formatTime } from "../utils/formatTime";
 
 export const LeaderboardUsersPredictions = () => {
   const [predictions, setPredictions] = useState<IMatchPrediction[]>([]);
@@ -18,7 +20,28 @@ export const LeaderboardUsersPredictions = () => {
         setError(null);
 
         const data = await fetchPredictionsByUserId(userId);
-        setPredictions(data);
+
+        const sortedPredictions = data.sort((a, b) => {
+          const now = new Date();
+          const matchA = a.match ? new Date(a.match.utcDate) : new Date(0);
+          const matchB = b.match ? new Date(b.match.utcDate) : new Date(0);
+
+          if (matchA > now && matchB > now) {
+            return (
+              new Date(b.created_at).getTime() -
+              new Date(a.created_at).getTime()
+            );
+          }
+
+          if (matchA > now) return -1;
+          if (matchB > now) return 1;
+
+          return (
+            new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+          );
+        });
+
+        setPredictions(sortedPredictions);
       } catch (err) {
         console.error("Failed to fetch predictions:", err);
         setError(
@@ -41,18 +64,64 @@ export const LeaderboardUsersPredictions = () => {
   }
 
   return (
-    <div>
+    <div className="-leaderboard-predictions-wrapper">
       <h1>Tippningar</h1>
 
-      <ul>
-        {predictions.map((prediction) => (
-          <li key={prediction.match_id}>
-            <p>
-              {prediction.match_id}, Prediction: {prediction.predicted_outcome}
-            </p>
-          </li>
-        ))}
-      </ul>
+      {predictions.map((prediction) => {
+        const isMatchFinished =
+          prediction.match && new Date(prediction.match.utcDate) < new Date();
+        const matchResult = prediction.match?.result;
+
+        return (
+          <div
+            key={`${prediction.id}-${prediction.match_id}`}
+            className="leaderboardPrediction-card"
+          >
+            <div className="leaderboard-match-info">
+              {prediction.match ? (
+                <>
+                  <p className="leaderboard-teams-name">
+                    {prediction.match.homeTeam.shortName} -{" "}
+                    {prediction.match.awayTeam.name}
+                  </p>
+
+                  <p>{formatTime(prediction.match.utcDate)}</p>
+                </>
+              ) : (
+                <p>Match data saknas.</p>
+              )}
+            </div>
+
+            <div className="leaderboard-prediction-info">
+              {prediction.match ? (
+                <p>
+                  Tippning:
+                  {getPredictionDescription(
+                    prediction.predicted_outcome,
+                    prediction.match.homeTeam.name,
+                    prediction.match.awayTeam.name
+                  )}
+                </p>
+              ) : (
+                <p>Tippning: Ingen tippning hittades.</p>
+              )}
+              {prediction.summary && <p>Motivering: {prediction.summary}</p>}
+
+              {prediction.match && isMatchFinished ? (
+                matchResult ? (
+                  <p>
+                    Resultat: {matchResult.home} - {matchResult.away}
+                  </p>
+                ) : (
+                  <p>Resultat saknas.</p>
+                )
+              ) : (
+                <p>Resultat: Matchen är inte färdigspelad ännu.</p>
+              )}
+            </div>
+          </div>
+        );
+      })}
     </div>
   );
 };
