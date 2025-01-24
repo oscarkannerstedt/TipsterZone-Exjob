@@ -64,7 +64,7 @@ export const LeaderboardUsersPredictions = () => {
   }
 
   return (
-    <div className="-leaderboard-predictions-wrapper">
+    <div className="leaderboard-predictions-wrapper">
       <h1>Tippningar</h1>
 
       {predictions.map((prediction) => {
@@ -75,7 +75,7 @@ export const LeaderboardUsersPredictions = () => {
         return (
           <div
             key={`${prediction.id}-${prediction.match_id}`}
-            className="leaderboardPrediction-card"
+            className="leaderboard-prediction-card"
           >
             <div className="leaderboard-match-info">
               {prediction.match ? (
