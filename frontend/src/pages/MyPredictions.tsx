@@ -144,7 +144,7 @@ export const MyPredicitons = () => {
             <div className="prediction-info">
               {prediction.match ? (
                 <p>
-                  Din tippning:
+                  <span className="prediction-text">Tippat:</span>
                   {getPredictionDescription(
                     prediction.predicted_outcome,
                     prediction.match.homeTeam.name,
@@ -154,7 +154,12 @@ export const MyPredicitons = () => {
               ) : (
                 <p>Din tippning: Ingen tippning hittades.</p>
               )}
-              {prediction.summary && <p>Motivering: {prediction.summary}</p>}
+              {prediction.summary && (
+                <p>
+                  <span className="summary-text">Motivering:</span>
+                  {prediction.summary}
+                </p>
+              )}
 
               {prediction.match ? (
                 isMatchFinished ? (
@@ -193,7 +198,10 @@ export const MyPredicitons = () => {
                       </div>
                     </div>
                   ) : (
-                    <p>Resultat saknas.</p>
+                    <div>
+                      <hr />
+                      <p>Resultat saknas.</p>
+                    </div>
                   )
                 ) : timeUntilMatch && timeUntilMatch > 20 ? (
                   <button

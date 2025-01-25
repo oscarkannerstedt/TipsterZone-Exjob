@@ -141,7 +141,9 @@ export const LeaderboardUsersPredictions = () => {
                     {prediction.match.awayTeam.name}
                   </p>
 
-                  <p>{formatTime(prediction.match.utcDate)}</p>
+                  <p className="match-start-time">
+                    {formatTime(prediction.match.utcDate)}
+                  </p>
                 </>
               ) : (
                 <p>Match data saknas.</p>
@@ -151,7 +153,7 @@ export const LeaderboardUsersPredictions = () => {
             <div className="leaderboard-prediction-info">
               {prediction.match ? (
                 <p>
-                  Tippning:
+                  <span className="prediction-text">Tippat:</span>
                   {getPredictionDescription(
                     prediction.predicted_outcome,
                     prediction.match.homeTeam.name,
@@ -162,7 +164,10 @@ export const LeaderboardUsersPredictions = () => {
                 <p>Tippning: Ingen tippning hittades.</p>
               )}
               {prediction.summary && (
-                <p className="summary-text">Motivering: {prediction.summary}</p>
+                <p>
+                  <span className="summary-text">Motivering:</span>
+                  {prediction.summary}
+                </p>
               )}
 
               {prediction.match && isMatchFinished ? (
