@@ -15,17 +15,31 @@ const app = express();
 app.options("*", cors());
 
 // const corsOptions = {
-//   // origin: process.env.FRONTEND_URL || "http://localhost:5173",
-//   origin: "*",
+//   origin:
+//     process.env.NODE_ENV === "production"
+//       ? "https://tipsterzone.onrender.com"
+//       : "http://localhost:5173",
 //   methods: ["GET", "POST", "PUT", "DELETE"],
 //   credentials: true,
 // };
 
 const corsOptions = {
-  origin:
-    process.env.NODE_ENV === "production"
-      ? "https://tipsterzone.onrender.com"
-      : "http://localhost:5173",
+  origin: (origin, callback) => {
+    if (!origin) return callback(null, true);
+
+    const allowedOrigins = [
+      "https://tipsterzone.onrender.com",
+      "https://tipsterzone.se",
+      "https://www.tipsterzone.se",
+      "http://localhost:5173",
+    ];
+
+    if (allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    } else {
+      return callback(new Error("Not allowed by CORS"));
+    }
+  },
   methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true,
 };
@@ -43,10 +57,6 @@ app.use("/api/matches", matchRoutes);
 app.use("/api/leaderboard", leaderboardRoutes);
 
 const PORT = process.env.PORT || 10000;
-
-// app.listen(PORT, () => {
-//   console.log(`Server is up and running on ${PORT}`);
-// });
 
 if (process.env.NODE_ENV !== "test") {
   app.listen(PORT, () => {
