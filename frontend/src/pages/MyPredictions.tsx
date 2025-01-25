@@ -1,14 +1,20 @@
 import { useEffect, useState } from "react";
-import { IMatchPrediction } from "../types/Match";
+import { IMatch, IMatchPrediction } from "../types/Match";
 import {
   deletePredictionByID,
   fetchPredictionsByUserId,
 } from "../services/predictionServices";
 import { formatTime } from "../utils/formatTime";
 import {
+  getMatchOutcome,
   getPredictionDescription,
   getTimeUntilMatch,
 } from "../utils/predictionUtils";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faCheckCircle,
+  faTimesCircle,
+} from "@fortawesome/free-solid-svg-icons";
 
 export const MyPredicitons = () => {
   const [predictions, setPredictions] = useState<IMatchPrediction[]>([]);
@@ -103,6 +109,19 @@ export const MyPredicitons = () => {
           prediction.match && new Date(prediction.match.utcDate) < new Date();
         const matchResult = prediction.match?.result;
 
+        const isPredictionCorrect = (
+          predictedOutcome: string,
+          matchResult: IMatch["result"] | null
+        ) => {
+          if (!matchResult) return false;
+          const matchOutcome = getMatchOutcome(
+            matchResult.home,
+            matchResult.away
+          );
+
+          return predictedOutcome === matchOutcome;
+        };
+
         return (
           <div
             key={`${prediction.id}-${prediction.match_id}`}
@@ -140,9 +159,39 @@ export const MyPredicitons = () => {
               {prediction.match ? (
                 isMatchFinished ? (
                   matchResult ? (
-                    <p>
-                      Resultat: {matchResult.home} - {matchResult.away}
-                    </p>
+                    <div className="result-container">
+                      <hr />
+                      <div className="prediction-result">
+                        <span className="icon-container">
+                          {isPredictionCorrect(
+                            prediction.predicted_outcome,
+                            matchResult
+                          ) ? (
+                            <span className="icon-success">
+                              <FontAwesomeIcon icon={faCheckCircle} />
+                            </span>
+                          ) : (
+                            <span className="icon-failure">
+                              <FontAwesomeIcon icon={faTimesCircle} />
+                            </span>
+                          )}
+
+                          <span className="result-status">
+                            {matchResult.home === matchResult.away
+                              ? "Oavgjort"
+                              : matchResult.home > matchResult.away
+                              ? `${prediction.match.homeTeam.shortName}`
+                              : `${prediction.match.awayTeam.name}`}
+                          </span>
+                        </span>
+                        <span className="result-text">
+                          Resultat:{" "}
+                          <strong>
+                            {matchResult.home} - {matchResult.away}
+                          </strong>
+                        </span>
+                      </div>
+                    </div>
                   ) : (
                     <p>Resultat saknas.</p>
                   )
@@ -156,7 +205,10 @@ export const MyPredicitons = () => {
                     Radera Tippning
                   </button>
                 ) : (
-                  <p>Matchen är inte färdig spelad ännu.</p>
+                  <div>
+                    <hr />
+                    <p>Matchen är inte färdig spelad ännu.</p>
+                  </div>
                 )
               ) : (
                 <p>Matchdata saknas.</p>
