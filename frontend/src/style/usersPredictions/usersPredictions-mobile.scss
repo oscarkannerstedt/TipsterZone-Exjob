@@ -84,6 +84,26 @@
     .leaderboard-prediction-info {
       font-size: 1rem;
 
+      .result-section hr {
+        border: 0;
+        border-top: 1px solid #ccc;
+        margin: 10px 0;
+      }
+
+      .result-section {
+        .result-text {
+          margin-right: 10px;
+        }
+
+        .icon-success {
+          color: green;
+        }
+
+        .icon-failure {
+          color: red;
+        }
+      }
+
       p {
         margin: 0.7rem 0;
       }

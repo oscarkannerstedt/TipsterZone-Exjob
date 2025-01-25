@@ -1,10 +1,18 @@
 import { useEffect, useState } from "react";
-import { IMatchPrediction } from "../types/Match";
+import { IMatch, IMatchPrediction } from "../types/Match";
 import { useLocation, useParams } from "react-router-dom";
 import { fetchPredictionsByUserId } from "../services/predictionServices";
-import { getPredictionDescription } from "../utils/predictionUtils";
+import {
+  getMatchOutcome,
+  getPredictionDescription,
+} from "../utils/predictionUtils";
 import { formatTime } from "../utils/formatTime";
 import { useHandleNavigation } from "../utils/navigationUtils";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faCheckCircle,
+  faTimesCircle,
+} from "@fortawesome/free-solid-svg-icons";
 
 export const LeaderboardUsersPredictions = () => {
   const [predictions, setPredictions] = useState<IMatchPrediction[]>([]);
@@ -107,6 +115,19 @@ export const LeaderboardUsersPredictions = () => {
           prediction.match && new Date(prediction.match.utcDate) < new Date();
         const matchResult = prediction.match?.result;
 
+        const isPredictionCorrect = (
+          predictedOutcome: string,
+          matchResult: IMatch["result"] | null
+        ) => {
+          if (!matchResult) return false;
+          const matchOutcome = getMatchOutcome(
+            matchResult.home,
+            matchResult.away
+          );
+
+          return predictedOutcome === matchOutcome;
+        };
+
         return (
           <div
             key={`${prediction.id}-${prediction.match_id}`}
@@ -140,18 +161,48 @@ export const LeaderboardUsersPredictions = () => {
               ) : (
                 <p>Tippning: Ingen tippning hittades.</p>
               )}
-              {prediction.summary && <p>Motivering: {prediction.summary}</p>}
+              {prediction.summary && (
+                <p className="summary-text">Motivering: {prediction.summary}</p>
+              )}
 
               {prediction.match && isMatchFinished ? (
                 matchResult ? (
-                  <p>
-                    Resultat: {matchResult.home} - {matchResult.away}
-                  </p>
+                  <div className="result-section">
+                    <hr />
+                    <p>
+                      <span className="result-text">
+                        Resultat:{" "}
+                        <strong>
+                          {matchResult.home} - {matchResult.away}
+                        </strong>
+                      </span>
+                      <span>
+                        {isPredictionCorrect(
+                          prediction.predicted_outcome,
+                          matchResult
+                        ) ? (
+                          <span className="icon-success">
+                            <FontAwesomeIcon icon={faCheckCircle} />
+                          </span>
+                        ) : (
+                          <span className="icon-failure">
+                            <FontAwesomeIcon icon={faTimesCircle} />
+                          </span>
+                        )}
+                      </span>
+                    </p>
+                  </div>
                 ) : (
-                  <p>Resultat saknas.</p>
+                  <div className="result-section">
+                    <hr />
+                    <p>Resultat saknas.</p>
+                  </div>
                 )
               ) : (
-                <p>Resultat: Matchen är inte färdigspelad ännu.</p>
+                <div className="result-section">
+                  <hr />
+                  <p>Resultat: Matchen är inte färdigspelad ännu.</p>
+                </div>
               )}
             </div>
           </div>
