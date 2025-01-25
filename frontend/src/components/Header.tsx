@@ -38,7 +38,7 @@ export const Header = () => {
       {menuDisplay && (
         <>
           <div className="logo" onClick={() => handleNavigation("/")}>
-            <h1>TIPSTERZONE</h1>
+            <h1>tipsterzone.se</h1>
           </div>
           <nav>
             <ul className="nav-items">
@@ -69,7 +69,7 @@ export const Header = () => {
       {!menuDisplay && (
         <>
           <div className="logo" onClick={() => handleNavigation("/")}>
-            <h1>TIPSTERZONE</h1>
+            <h1>tipsterzone.se</h1>
           </div>
           <div className="burger" onClick={handleBurger}>
             <span></span>
