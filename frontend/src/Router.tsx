@@ -8,6 +8,7 @@ import MyPredicitons from "./pages/MyPredictions";
 import Login from "./pages/Login";
 import SignupUser from "./pages/SignupUser";
 import Rules from "./pages/Rules";
+import LeaderboardUsersPredictions from "./pages/LeaderboardUsersPredictions";
 
 export const router = createBrowserRouter([
   {
@@ -42,6 +43,10 @@ export const router = createBrowserRouter([
       {
         path: "/rules",
         element: <Rules />,
+      },
+      {
+        path: "/userpredictions/:userId",
+        element: <LeaderboardUsersPredictions />,
       },
     ],
   },

@@ -1,10 +1,13 @@
 import { useEffect, useState } from "react";
 import { fetchLeaderboard } from "../services/leaderboardServices";
 import { ILeaderboardUser } from "../types/Leaderboard";
+import { useHandleNavigation } from "../utils/navigationUtils";
 
 export const Leaderboard = () => {
   const [leaderboard, setLeaderboard] = useState<ILeaderboardUser[]>([]);
   const [error, setError] = useState<string | null>(null);
+
+  const handleNavigation = useHandleNavigation();
 
   useEffect(() => {
     const getLeaderboard = async () => {
@@ -37,7 +40,19 @@ export const Leaderboard = () => {
 
           <div className="leaderboard-cards">
             {leaderboard.map((user) => (
-              <div key={user.rank} className="leaderboard-card">
+              <div
+                key={user.rank}
+                className="leaderboard-card"
+                onClick={() =>
+                  handleNavigation(`/userpredictions/${user.userId}`, {
+                    state: {
+                      username: user.username,
+                      total_points: user.total_points,
+                      rank: user.rank,
+                    },
+                  })
+                }
+              >
                 <div className="rank-box">{user.rank}</div>
 
                 <div className="user-info">

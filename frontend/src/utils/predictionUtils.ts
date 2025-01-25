@@ -15,6 +15,15 @@ export const getPredictionDescription = (
   }
 };
 
+export const getMatchOutcome = (
+  homeGoals: number,
+  awayGoals: number
+): string => {
+  if (homeGoals > awayGoals) return "1";
+  if (homeGoals < awayGoals) return "2";
+  return "X";
+};
+
 export const getTimeUntilMatch = (utcDate: string): number | null => {
   if (!utcDate) return null;
 

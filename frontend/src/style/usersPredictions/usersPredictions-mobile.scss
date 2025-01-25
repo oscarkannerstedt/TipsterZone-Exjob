@@ -1,0 +1,137 @@
+.leaderboard-predictions-wrapper {
+  min-height: calc(100vh - 60px);
+  background-color: #f9f9f9;
+  padding: 1rem;
+
+  .go-back-button {
+    background: none;
+    border: none;
+    color: black;
+    font-size: 1rem;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .user-profile-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin-top: 15px;
+    margin-bottom: 25px;
+    padding: 15px;
+    background-color: #363839;
+    border-radius: 40px;
+
+    h2 {
+      font-size: 1.5rem;
+      margin: 0;
+      color: white;
+    }
+
+    .user-stars {
+      display: flex;
+      gap: 3px;
+
+      .star {
+        color: #ccc;
+        font-size: 1.1rem;
+      }
+
+      .filled {
+        color: #ffc107;
+      }
+    }
+
+    p {
+      margin: 0;
+    }
+
+    h3,
+    h4 {
+      margin: 0;
+      font-size: 1.3rem;
+      color: #b0b0b0;
+
+      span {
+        font-size: 1.5rem;
+        color: white;
+        margin-left: 5px;
+      }
+    }
+  }
+
+  .leaderboard-prediction-card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+    .leaderboard-match-info {
+      margin-bottom: 0.5rem;
+      font-size: 1rem;
+
+      .leaderboard-teams-name {
+        font-weight: bold;
+        font-size: 1.2rem;
+        margin-top: 10px;
+        margin-bottom: -10px;
+      }
+
+      .match-start-time {
+        font-size: 0.9rem;
+      }
+    }
+
+    .leaderboard-prediction-info {
+      font-size: 1rem;
+
+      .prediction-text {
+        font-weight: bold;
+        margin-right: 4px;
+      }
+
+      .summary-text {
+        font-weight: bold;
+        margin-right: 4px;
+      }
+
+      .result-section {
+        hr {
+          border: 0;
+          border-top: 1px solid #ccc;
+          margin: 10px 0;
+        }
+      }
+
+      .result {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+
+        .icon-container {
+          .icon-success {
+            color: green;
+          }
+
+          .icon-failure {
+            color: red;
+          }
+
+          .result-status {
+            margin-left: 6px;
+          }
+        }
+      }
+
+      p {
+        margin: 0.4rem 0;
+      }
+    }
+  }
+}

@@ -5,8 +5,7 @@
 
   h1 {
     margin-top: 0;
-    font-size: 1.5rem;
-    align-items: center;
+    font-size: 1.7rem;
     margin-bottom: 1rem;
   }
 
@@ -25,11 +24,52 @@
       .teams-name {
         font-weight: bold;
         font-size: 1.2rem;
+        margin-top: 10px;
+        margin-bottom: -10px;
       }
     }
 
     .prediction-info {
       font-size: 1rem;
+
+      .prediction-text {
+        font-weight: bold;
+        margin-right: 4px;
+      }
+
+      .summary-text {
+        font-weight: bold;
+        margin-right: 4px;
+      }
+
+      .result-container {
+        hr {
+          border: 0;
+          border-top: 1px solid #ccc;
+          margin: 10px 0;
+        }
+      }
+
+      .prediction-result {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+
+        .icon-container {
+          .icon-success {
+            color: green;
+          }
+
+          .icon-failure {
+            color: red;
+          }
+
+          .result-status {
+            margin-left: 6px;
+          }
+        }
+      }
 
       p {
         margin: 0.4rem 0;
