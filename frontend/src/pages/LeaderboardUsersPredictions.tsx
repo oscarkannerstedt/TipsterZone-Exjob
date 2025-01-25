@@ -169,14 +169,8 @@ export const LeaderboardUsersPredictions = () => {
                 matchResult ? (
                   <div className="result-section">
                     <hr />
-                    <p>
-                      <span className="result-text">
-                        Resultat:{" "}
-                        <strong>
-                          {matchResult.home} - {matchResult.away}
-                        </strong>
-                      </span>
-                      <span>
+                    <div className="result">
+                      <span className="icon-container">
                         {isPredictionCorrect(
                           prediction.predicted_outcome,
                           matchResult
@@ -189,8 +183,22 @@ export const LeaderboardUsersPredictions = () => {
                             <FontAwesomeIcon icon={faTimesCircle} />
                           </span>
                         )}
+
+                        <span className="result-status">
+                          {matchResult.home === matchResult.away
+                            ? "Oavgjort"
+                            : matchResult.home > matchResult.away
+                            ? `${prediction.match.homeTeam.shortName}`
+                            : `${prediction.match.awayTeam.name}`}
+                        </span>
                       </span>
-                    </p>
+                      <span className="result-text">
+                        Resultat:{" "}
+                        <strong>
+                          {matchResult.home} - {matchResult.away}
+                        </strong>
+                      </span>
+                    </div>
                   </div>
                 ) : (
                   <div className="result-section">

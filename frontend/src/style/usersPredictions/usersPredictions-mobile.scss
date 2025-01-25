@@ -84,23 +84,34 @@
     .leaderboard-prediction-info {
       font-size: 1rem;
 
-      .result-section hr {
-        border: 0;
-        border-top: 1px solid #ccc;
-        margin: 10px 0;
+      .result-section {
+        hr {
+          border: 0;
+          border-top: 1px solid #ccc;
+          margin: 10px 0;
+        }
       }
 
-      .result-section {
-        .result-text {
-          margin-right: 10px;
-        }
+      .result {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
 
-        .icon-success {
-          color: green;
-        }
+        .icon-container {
+          // position: absolute;
 
-        .icon-failure {
-          color: red;
+          .icon-success {
+            color: green;
+          }
+
+          .icon-failure {
+            color: red;
+          }
+
+          .result-status {
+            margin-left: 6px;
+          }
         }
       }
 
