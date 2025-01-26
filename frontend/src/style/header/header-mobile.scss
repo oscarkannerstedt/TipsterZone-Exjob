@@ -57,8 +57,14 @@
 
       .login {
         display: flex;
+        gap: 0.5rem;
         margin-top: 15px;
         margin-bottom: -5px;
+      }
+
+      .create-user-item {
+        display: flex;
+        gap: 0.5rem;
       }
 
       li {

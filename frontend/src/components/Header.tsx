@@ -2,7 +2,11 @@ import { useEffect, useState } from "react";
 import { useHandleNavigation } from "../utils/navigationUtils";
 import { useAuth } from "../hooks/useAuth";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
+import {
+  faSignOutAlt,
+  faSignInAlt,
+  faUserPlus,
+} from "@fortawesome/free-solid-svg-icons";
 
 export const Header = () => {
   const [burgerOpen, setBurgerOpen] = useState(false);
@@ -32,6 +36,10 @@ export const Header = () => {
 
   const handleBurger = () => {
     setBurgerOpen(!burgerOpen);
+  };
+
+  const closeMenu = () => {
+    setBurgerOpen(false);
   };
 
   return (
@@ -79,11 +87,28 @@ export const Header = () => {
             <div className={`burger-menu ${burgerOpen ? "open" : ""}`}>
               <nav>
                 <ul className="nav-items">
-                  <li onClick={() => handleNavigation("/matches")}>Matcher</li>
-                  <li onClick={() => handleNavigation("/leaderboard")}>
+                  <li
+                    onClick={() => {
+                      handleNavigation("/matches");
+                      closeMenu();
+                    }}
+                  >
+                    Matcher
+                  </li>
+                  <li
+                    onClick={() => {
+                      handleNavigation("/leaderboard");
+                      closeMenu();
+                    }}
+                  >
                     Topplista
                   </li>
-                  <li onClick={() => handleNavigation("/mypredictions")}>
+                  <li
+                    onClick={() => {
+                      handleNavigation("/mypredictions");
+                      closeMenu();
+                    }}
+                  >
                     Mina Spel
                   </li>
                   {isLoggedIn ? (
@@ -94,13 +119,24 @@ export const Header = () => {
                   ) : (
                     <>
                       <li
-                        onClick={() => handleNavigation("/login")}
+                        onClick={() => {
+                          handleNavigation("/login");
+                          closeMenu();
+                        }}
                         className="login"
                       >
-                        Logga In
+                        <FontAwesomeIcon icon={faSignInAlt} />
+                        <span>Logga In</span>
                       </li>
-                      <li onClick={() => handleNavigation("/signup")}>
-                        Skapa Användare
+                      <li
+                        onClick={() => {
+                          handleNavigation("/signup");
+                          closeMenu();
+                        }}
+                        className="create-user-item"
+                      >
+                        <FontAwesomeIcon icon={faUserPlus} />
+                        <span>Skapa Användare</span>
                       </li>
                     </>
                   )}
