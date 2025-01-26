@@ -93,7 +93,10 @@ export const Header = () => {
                     </li>
                   ) : (
                     <>
-                      <li onClick={() => handleNavigation("/login")}>
+                      <li
+                        onClick={() => handleNavigation("/login")}
+                        className="login"
+                      >
                         Logga In
                       </li>
                       <li onClick={() => handleNavigation("/signup")}>

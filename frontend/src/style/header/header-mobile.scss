@@ -38,7 +38,6 @@
     top: 60px;
     right: 2px;
     z-index: 10;
-    // background-color: black;
     background-color: #292c30;
     color: white;
     border-radius: 5px;
@@ -56,9 +55,18 @@
         margin-top: 20px;
       }
 
+      .login {
+        display: flex;
+        margin-top: 15px;
+      }
+
       li {
         list-style: none;
         text-align: left;
+
+        &:active {
+          color: #36a12f;
+        }
       }
     }
 
