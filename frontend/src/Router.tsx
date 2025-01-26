@@ -9,11 +9,17 @@ import Login from "./pages/Login";
 import SignupUser from "./pages/SignupUser";
 import Rules from "./pages/Rules";
 import LeaderboardUsersPredictions from "./pages/LeaderboardUsersPredictions";
+import AuthProvider from "./contexts/AuthContext";
 
 export const router = createBrowserRouter([
   {
     path: "/",
-    element: <Layout />,
+
+    element: (
+      <AuthProvider>
+        <Layout />
+      </AuthProvider>
+    ),
     errorElement: <NotFound />,
     children: [
       {

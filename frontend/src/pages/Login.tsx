@@ -27,7 +27,7 @@ const Login = () => {
 
       console.log("Inloggad som: ", userData);
 
-      //Navigate to new page
+      handleNavigation("/");
     } catch (err: unknown) {
       const axiosError = err as AxiosError<{ message: string }>;
       if (axiosError.response && axiosError.response.data) {

@@ -28,7 +28,7 @@ export const Leaderboard = () => {
 
   return (
     <div className="leaderboard-container">
-      <h1>Topp Lista</h1>
+      <h1>Topplista</h1>
 
       {leaderboard.length > 0 ? (
         <div>

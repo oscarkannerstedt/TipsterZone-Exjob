@@ -1,12 +1,17 @@
 import { useEffect, useState } from "react";
 import { useHandleNavigation } from "../utils/navigationUtils";
 import { useAuth } from "../hooks/useAuth";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faSignOutAlt,
+  faSignInAlt,
+  faUserPlus,
+} from "@fortawesome/free-solid-svg-icons";
 
 export const Header = () => {
   const [burgerOpen, setBurgerOpen] = useState(false);
   const [menuDisplay, setMenuDisplay] = useState(true);
   const { isLoggedIn, logout } = useAuth();
-  console.log("isLoggedIn: ", isLoggedIn);
 
   useEffect(() => {
     const handleResize = () => {
@@ -33,6 +38,10 @@ export const Header = () => {
     setBurgerOpen(!burgerOpen);
   };
 
+  const closeMenu = () => {
+    setBurgerOpen(false);
+  };
+
   return (
     <section className="header">
       {menuDisplay && (
@@ -44,15 +53,13 @@ export const Header = () => {
             <ul className="nav-items">
               <li onClick={() => handleNavigation("/matches")}>Matcher</li>
               <li onClick={() => handleNavigation("/leaderboard")}>
-                Topp Lista
+                Topplista
               </li>
               <li onClick={() => handleNavigation("/mypredictions")}>
-                Mina Tippningar
+                Mina Spel
               </li>
               {isLoggedIn ? (
-                <li>
-                  <button onClick={logout}>Logga ut</button>
-                </li>
+                <li onClick={logout}>Logga ut</li>
               ) : (
                 <>
                   <li onClick={() => handleNavigation("/login")}>Logga In</li>
@@ -77,27 +84,59 @@ export const Header = () => {
             <span></span>
           </div>
           {burgerOpen && (
-            <div className="burger-menu">
+            <div className={`burger-menu ${burgerOpen ? "open" : ""}`}>
               <nav>
                 <ul className="nav-items">
-                  <li onClick={() => handleNavigation("/matches")}>Matcher</li>
-                  <li onClick={() => handleNavigation("/leaderboard")}>
-                    Topp Lista
+                  <li
+                    onClick={() => {
+                      handleNavigation("/matches");
+                      closeMenu();
+                    }}
+                  >
+                    Matcher
                   </li>
-                  <li onClick={() => handleNavigation("/mypredictions")}>
-                    Mina Tippningar
+                  <li
+                    onClick={() => {
+                      handleNavigation("/leaderboard");
+                      closeMenu();
+                    }}
+                  >
+                    Topplista
+                  </li>
+                  <li
+                    onClick={() => {
+                      handleNavigation("/mypredictions");
+                      closeMenu();
+                    }}
+                  >
+                    Mina Spel
                   </li>
                   {isLoggedIn ? (
-                    <li>
-                      <button onClick={logout}>Logga ut</button>
+                    <li className="logout-item" onClick={logout}>
+                      <FontAwesomeIcon icon={faSignOutAlt} />
+                      <span>Logga ut</span>
                     </li>
                   ) : (
                     <>
-                      <li onClick={() => handleNavigation("/login")}>
-                        Logga In
+                      <li
+                        onClick={() => {
+                          handleNavigation("/login");
+                          closeMenu();
+                        }}
+                        className="login"
+                      >
+                        <FontAwesomeIcon icon={faSignInAlt} />
+                        <span>Logga In</span>
                       </li>
-                      <li onClick={() => handleNavigation("/signup")}>
-                        Skapa Användare
+                      <li
+                        onClick={() => {
+                          handleNavigation("/signup");
+                          closeMenu();
+                        }}
+                        className="create-user-item"
+                      >
+                        <FontAwesomeIcon icon={faUserPlus} />
+                        <span>Skapa Användare</span>
                       </li>
                     </>
                   )}
