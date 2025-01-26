@@ -1,9 +1,12 @@
 import { ReactNode, useEffect, useState } from "react";
 import { AuthContext } from "./AuthContextTs";
+import { useHandleNavigation } from "../utils/navigationUtils";
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userId, setUserId] = useState<string | null>(null);
+
+  const handleNavigation = useHandleNavigation();
 
   useEffect(() => {
     const storedUserId = localStorage.getItem("userId");
@@ -50,6 +53,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
     localStorage.removeItem("userId");
     localStorage.removeItem("isLoggedIn");
+
+    handleNavigation("/login");
   };
 
   return (
