@@ -17,7 +17,7 @@ export const router = createBrowserRouter([
 
     element: (
       <AuthProvider>
-        <Layout />,
+        <Layout />
       </AuthProvider>
     ),
     errorElement: <NotFound />,
