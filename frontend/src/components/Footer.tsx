@@ -9,10 +9,8 @@ export const Footer = () => {
         <ul>
           <li onClick={() => handleNavigation("/")}>Hem</li>
           <li onClick={() => handleNavigation("/matches")}>Matcher</li>
-          <li onClick={() => handleNavigation("/mypredictions")}>
-            Mina Tippningar
-          </li>
-          <li onClick={() => handleNavigation("/leaderboard")}>Top Lista</li>
+          <li onClick={() => handleNavigation("/mypredictions")}>Mina Spel</li>
+          <li onClick={() => handleNavigation("/leaderboard")}>Topplista</li>
           <li onClick={() => handleNavigation("/rules")}>Regler</li>
         </ul>
       </nav>
