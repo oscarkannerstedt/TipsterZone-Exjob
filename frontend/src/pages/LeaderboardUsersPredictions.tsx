@@ -33,7 +33,6 @@ export const LeaderboardUsersPredictions = () => {
         setError(null);
 
         const data = await fetchPredictionsByUserId(userId);
-        console.log(data);
 
         const sortedPredictions = data.sort((a, b) => {
           const now = new Date();
@@ -70,11 +69,15 @@ export const LeaderboardUsersPredictions = () => {
   }, [userId]);
 
   if (loading) {
-    return <p>Loading predictions...</p>;
+    return (
+      <p role="status" aria-live="polite">
+        Laddar tippningar...
+      </p>
+    );
   }
 
   if (error) {
-    return <p>{error}</p>;
+    return <p role="alert">{error}</p>;
   }
 
   // Function to render the star rating based on the user's rank
@@ -95,7 +98,11 @@ export const LeaderboardUsersPredictions = () => {
 
   return (
     <div className="leaderboard-predictions-wrapper">
-      <button className="go-back-button" onClick={() => handleNavigation()}>
+      <button
+        className="go-back-button"
+        aria-label="Gå tillbaka till topplistan"
+        onClick={() => handleNavigation()}
+      >
         ← Tillbaka
       </button>
 
@@ -132,6 +139,7 @@ export const LeaderboardUsersPredictions = () => {
           <div
             key={`${prediction.id}-${prediction.match_id}`}
             className="leaderboard-prediction-card"
+            tabIndex={0}
           >
             <div className="leaderboard-match-info">
               {prediction.match ? (
@@ -181,11 +189,17 @@ export const LeaderboardUsersPredictions = () => {
                           matchResult
                         ) ? (
                           <span className="icon-success">
-                            <FontAwesomeIcon icon={faCheckCircle} />
+                            <FontAwesomeIcon
+                              icon={faCheckCircle}
+                              aria-label="Korrekt tippning"
+                            />
                           </span>
                         ) : (
                           <span className="icon-failure">
-                            <FontAwesomeIcon icon={faTimesCircle} />
+                            <FontAwesomeIcon
+                              icon={faTimesCircle}
+                              aria-label="Felaktig tippning"
+                            />
                           </span>
                         )}
 

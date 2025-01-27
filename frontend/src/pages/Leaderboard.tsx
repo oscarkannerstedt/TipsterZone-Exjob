@@ -43,6 +43,9 @@ export const Leaderboard = () => {
               <div
                 key={user.rank}
                 className="leaderboard-card"
+                tabIndex={0}
+                role="button"
+                aria-label={`Visa detaljer för användare ${user.username}, rank ${user.rank}, poäng ${user.total_points}`}
                 onClick={() =>
                   handleNavigation(`/userpredictions/${user.userId}`, {
                     state: {
@@ -52,6 +55,17 @@ export const Leaderboard = () => {
                     },
                   })
                 }
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    handleNavigation(`/userpredictions/${user.userId}`, {
+                      state: {
+                        username: user.username,
+                        total_points: user.total_points,
+                        rank: user.rank,
+                      },
+                    });
+                  }
+                }}
               >
                 <div className="rank-box">{user.rank}</div>
 
@@ -64,6 +78,7 @@ export const Leaderboard = () => {
                         className={`star ${
                           i < Math.ceil((30 - user.rank) / 6) ? "filled" : ""
                         }`}
+                        aria-hidden="true"
                       >
                         ★
                       </span>
@@ -77,7 +92,13 @@ export const Leaderboard = () => {
           </div>
         </div>
       ) : (
-        <p>Laddar Top Lista...</p>
+        <div
+          className="loading-spinner"
+          role="status"
+          aria-label="Laddar topplista..."
+        >
+          <p>Laddar Top Lista...</p>
+        </div>
       )}
     </div>
   );
