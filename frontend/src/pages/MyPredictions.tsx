@@ -173,11 +173,17 @@ export const MyPredicitons = () => {
                             matchResult
                           ) ? (
                             <span className="icon-success">
-                              <FontAwesomeIcon icon={faCheckCircle} />
+                              <FontAwesomeIcon
+                                icon={faCheckCircle}
+                                aria-label="Korrekt tippning"
+                              />
                             </span>
                           ) : (
                             <span className="icon-failure">
-                              <FontAwesomeIcon icon={faTimesCircle} />
+                              <FontAwesomeIcon
+                                icon={faTimesCircle}
+                                aria-label="Felaktig tippning"
+                              />
                             </span>
                           )}
 
@@ -209,6 +215,7 @@ export const MyPredicitons = () => {
                     onClick={() =>
                       handleDeletePrediction(prediction._id, setPredictions)
                     }
+                    aria-label="Radera denna tippning"
                   >
                     Radera Tippning
                   </button>

@@ -46,24 +46,55 @@ export const Header = () => {
     <section className="header">
       {menuDisplay && (
         <>
-          <div className="logo" onClick={() => handleNavigation("/")}>
+          <div
+            role="menuitem"
+            tabIndex={0}
+            className="logo"
+            onClick={() => handleNavigation("/")}
+          >
             <h1>tipsterzone.se</h1>
           </div>
           <nav>
             <ul className="nav-items">
-              <li onClick={() => handleNavigation("/matches")}>Matcher</li>
-              <li onClick={() => handleNavigation("/leaderboard")}>
+              <li
+                role="menuitem"
+                tabIndex={0}
+                onClick={() => handleNavigation("/matches")}
+              >
+                Matcher
+              </li>
+              <li
+                role="menuitem"
+                tabIndex={0}
+                onClick={() => handleNavigation("/leaderboard")}
+              >
                 Topplista
               </li>
-              <li onClick={() => handleNavigation("/mypredictions")}>
+              <li
+                role="menuitem"
+                tabIndex={0}
+                onClick={() => handleNavigation("/mypredictions")}
+              >
                 Mina Spel
               </li>
               {isLoggedIn ? (
-                <li onClick={logout}>Logga ut</li>
+                <li role="menuitem" tabIndex={0} onClick={logout}>
+                  Logga ut
+                </li>
               ) : (
                 <>
-                  <li onClick={() => handleNavigation("/login")}>Logga In</li>
-                  <li onClick={() => handleNavigation("/signup")}>
+                  <li
+                    role="menuitem"
+                    tabIndex={0}
+                    onClick={() => handleNavigation("/login")}
+                  >
+                    Logga In
+                  </li>
+                  <li
+                    role="menuitem"
+                    tabIndex={0}
+                    onClick={() => handleNavigation("/signup")}
+                  >
                     Skapa Användare
                   </li>
                 </>
@@ -75,10 +106,22 @@ export const Header = () => {
 
       {!menuDisplay && (
         <>
-          <div className="logo" onClick={() => handleNavigation("/")}>
+          <div
+            className="logo"
+            role="Navigate to start page"
+            tabIndex={0}
+            onClick={() => handleNavigation("/")}
+          >
             <h1>tipsterzone.se</h1>
           </div>
-          <div className="burger" onClick={handleBurger}>
+          <div
+            tabIndex={0}
+            role="button"
+            className="burger"
+            onClick={handleBurger}
+            aria-label="Öppna navigationsmeny"
+            aria-expanded={burgerOpen}
+          >
             <span></span>
             <span></span>
             <span></span>
@@ -88,6 +131,8 @@ export const Header = () => {
               <nav>
                 <ul className="nav-items">
                   <li
+                    role="menuitem"
+                    tabIndex={0}
                     onClick={() => {
                       handleNavigation("/matches");
                       closeMenu();
@@ -96,6 +141,8 @@ export const Header = () => {
                     Matcher
                   </li>
                   <li
+                    role="menuitem"
+                    tabIndex={0}
                     onClick={() => {
                       handleNavigation("/leaderboard");
                       closeMenu();
@@ -104,6 +151,8 @@ export const Header = () => {
                     Topplista
                   </li>
                   <li
+                    role="menuitem"
+                    tabIndex={0}
                     onClick={() => {
                       handleNavigation("/mypredictions");
                       closeMenu();
@@ -112,13 +161,20 @@ export const Header = () => {
                     Mina Spel
                   </li>
                   {isLoggedIn ? (
-                    <li className="logout-item" onClick={logout}>
+                    <li
+                      className="logout-item"
+                      role="menuitem"
+                      tabIndex={0}
+                      onClick={logout}
+                    >
                       <FontAwesomeIcon icon={faSignOutAlt} />
                       <span>Logga ut</span>
                     </li>
                   ) : (
                     <>
                       <li
+                        role="menuitem"
+                        tabIndex={0}
                         onClick={() => {
                           handleNavigation("/login");
                           closeMenu();
@@ -129,6 +185,8 @@ export const Header = () => {
                         <span>Logga In</span>
                       </li>
                       <li
+                        role="menuitem"
+                        tabIndex={0}
                         onClick={() => {
                           handleNavigation("/signup");
                           closeMenu();

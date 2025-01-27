@@ -25,8 +25,6 @@ const Login = () => {
       const userData = await loginUser(email, password);
       login(userData.userId);
 
-      console.log("Inloggad som: ", userData);
-
       handleNavigation("/");
     } catch (err: unknown) {
       const axiosError = err as AxiosError<{ message: string }>;
@@ -69,7 +67,7 @@ const Login = () => {
           Logga in
         </button>
       </form>
-      <div aria-live="polite">
+      <div aria-live="assertive">
         {error && (
           <p role="alert" style={{ color: "red" }}>
             {error}

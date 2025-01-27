@@ -35,13 +35,10 @@ export const Matches = () => {
     setMotivationVisible((prev) =>
       prev.map((visible, i) => (i === index ? !visible : visible))
     );
-    console.log("Click on textarea button");
   };
 
   const handlePredictionSubmit = (matchId: number) => {
     const userId = localStorage.getItem("userId");
-
-    console.log("userId", userId);
 
     if (!userId) {
       alert("Du måste logga in för att kunna lägga en tippning!");
@@ -63,11 +60,9 @@ export const Matches = () => {
       league: league,
     };
 
-    console.log("match id:", matchId);
-
     createPrediciton(predicitonData)
       .then((response) => {
-        alert("Prediction skapad!");
+        alert("Tippningen är lagd!");
         console.log(response);
 
         setSelectedOutcomes((prev) => {
@@ -80,7 +75,6 @@ export const Matches = () => {
       })
       .catch((error) => {
         alert(error.message);
-        console.log("error create predicition", error);
       });
   };
 
@@ -102,7 +96,10 @@ export const Matches = () => {
           className=" league-menu league-menu-pl"
           onClick={() => setLeague("PL")}
         >
-          <img src="/images/england_round_icon_64.png" alt="England" />
+          <img
+            src="/images/england_round_icon_64.png"
+            alt="England Premier League"
+          />
           <div>England</div>
         </div>
 
@@ -110,7 +107,7 @@ export const Matches = () => {
           className="league-menu league-menu-fl1"
           onClick={() => setLeague("FL1")}
         >
-          <img src="/images/france_round_icon_64.png" alt="Frankrike" />
+          <img src="/images/france_round_icon_64.png" alt="Frankrike Ligue 1" />
           <div>Frankrike</div>
         </div>
 
@@ -118,7 +115,7 @@ export const Matches = () => {
           className=" league-menu league-menu-sa"
           onClick={() => setLeague("SA")}
         >
-          <img src="/images/italy_round_icon_64.png" alt="Italien" />
+          <img src="/images/italy_round_icon_64.png" alt="Italien Serie A" />
           <div>Italien</div>
         </div>
 
@@ -126,7 +123,7 @@ export const Matches = () => {
           className="league-menu league-menu-pd"
           onClick={() => setLeague("PD")}
         >
-          <img src="/images/spain_round_icon_64.png" alt="Spanien" />
+          <img src="/images/spain_round_icon_64.png" alt="Spanien La Liga" />
           <div>Spanien</div>
         </div>
       </div>
@@ -146,25 +143,32 @@ export const Matches = () => {
               <button
                 onClick={() => handleOutcomeClick(match.id, "1")}
                 className={selectedOutcomes[match.id] === "1" ? "selected" : ""}
+                aria-pressed={selectedOutcomes[match.id] === "1"}
               >
                 1
               </button>
               <button
                 onClick={() => handleOutcomeClick(match.id, "X")}
                 className={selectedOutcomes[match.id] === "X" ? "selected" : ""}
+                aria-pressed={selectedOutcomes[match.id] === "X"}
               >
                 X
               </button>
               <button
                 onClick={() => handleOutcomeClick(match.id, "2")}
                 className={selectedOutcomes[match.id] === "2" ? "selected" : ""}
+                aria-pressed={selectedOutcomes[match.id] === "2"}
               >
                 2
               </button>
             </div>
 
             <div className="motivation">
-              <button onClick={() => toggleMotivation(index)}>
+              <button
+                id={`motivation-button-${index}`}
+                aria-label="Lägg till en motivering för denna match"
+                onClick={() => toggleMotivation(index)}
+              >
                 Vill du lägga till en motivering?
               </button>
 
@@ -176,6 +180,7 @@ export const Matches = () => {
                   placeholder="Skriv din motivering här..."
                   value={summary}
                   onChange={(e) => setSummary(e.target.value)}
+                  aria-labelledby={`motivation-button-${index}`}
                 ></textarea>
               )}
             </div>
