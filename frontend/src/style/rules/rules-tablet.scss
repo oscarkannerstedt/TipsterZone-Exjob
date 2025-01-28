@@ -1,0 +1,21 @@
+@media (min-width: 600px) {
+  .rules-page {
+    .rules-container {
+      padding: 40px;
+
+      h1 {
+        font-size: 2.5rem;
+      }
+
+      h2,
+      h3 {
+        font-size: 1.8rem;
+      }
+
+      p,
+      li {
+        font-size: 1.1rem;
+      }
+    }
+  }
+}
