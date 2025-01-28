@@ -1,9 +1,6 @@
 body {
   margin: 0;
   padding: 0;
-  background-image: url("/images/green-background.jpg");
-  background-size: cover;
-  background-repeat: no-repeat;
 }
 
 main {
@@ -20,4 +17,12 @@ header,
 main,
 footer {
   width: 100%;
+}
+
+@media (min-width: 1150px) {
+  body {
+    background-image: url("/images/green-background.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
 }
