@@ -15,10 +15,13 @@ import {
   faCheckCircle,
   faTimesCircle,
 } from "@fortawesome/free-solid-svg-icons";
+import { useHandleNavigation } from "../utils/navigationUtils";
 
 export const MyPredicitons = () => {
   const [predictions, setPredictions] = useState<IMatchPrediction[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+
+  const handleNavigation = useHandleNavigation();
 
   useEffect(() => {
     const fetchUserPredictions = async () => {
@@ -26,6 +29,7 @@ export const MyPredicitons = () => {
 
       if (!userId) {
         alert("Du måste vara inloggad för att kunna se dina tippningar.");
+        handleNavigation("/login");
         return;
       }
 
@@ -66,7 +70,7 @@ export const MyPredicitons = () => {
     };
 
     fetchUserPredictions();
-  }, []);
+  }, [handleNavigation]);
 
   if (loading) {
     return <p>Loading...</p>;
