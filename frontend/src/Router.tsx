@@ -10,6 +10,7 @@ import SignupUser from "./pages/SignupUser";
 import Rules from "./pages/Rules";
 import LeaderboardUsersPredictions from "./pages/LeaderboardUsersPredictions";
 import AuthProvider from "./contexts/AuthContext";
+import PrivateRoutes from "./components/PrivateRoutes";
 
 export const router = createBrowserRouter([
   {
@@ -36,7 +37,11 @@ export const router = createBrowserRouter([
       },
       {
         path: "/mypredictions",
-        element: <MyPredicitons />,
+        element: (
+          <PrivateRoutes>
+            <MyPredicitons />
+          </PrivateRoutes>
+        ),
       },
       {
         path: "/login",
