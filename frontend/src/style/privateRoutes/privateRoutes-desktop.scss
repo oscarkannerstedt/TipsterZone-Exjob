@@ -1,0 +1,29 @@
+@media (min-width: 990px) {
+  .not-logged-in-message {
+    padding-top: 40px;
+
+    .button-container {
+      button {
+        cursor: pointer;
+      }
+
+      .login-button {
+        transition: background-color 0.3s ease;
+
+        &:hover {
+          background-color: #2b7342;
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+      }
+
+      .signup-button {
+        transition: background-color 0.3s ease;
+
+        &:hover {
+          background-color: #0056a3;
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+      }
+    }
+  }
+}

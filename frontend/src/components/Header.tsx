@@ -47,7 +47,6 @@ export const Header = () => {
       {menuDisplay && (
         <>
           <div
-            role="menuitem"
             tabIndex={0}
             className="logo"
             onClick={() => handleNavigation("/")}
@@ -108,7 +107,6 @@ export const Header = () => {
         <>
           <div
             className="logo"
-            role="Navigate to start page"
             tabIndex={0}
             onClick={() => handleNavigation("/")}
           >
