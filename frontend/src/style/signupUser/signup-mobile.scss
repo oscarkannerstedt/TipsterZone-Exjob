@@ -1,3 +1,5 @@
+@use "../mixins/fonts.scss" as *;
+
 .signup-wrapper {
   display: flex;
   flex-direction: column;
@@ -8,6 +10,7 @@
   text-align: center;
 
   h1 {
+    @include playfair-bold;
     font-size: 2rem;
     margin-bottom: 1rem;
     margin-top: 2rem;
@@ -15,6 +18,7 @@
   }
 
   form {
+    @include inter-regular;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -72,6 +76,7 @@
   }
 
   .login-user-wrapper {
+    @include inter-regular;
     margin-top: 1rem;
 
     p {

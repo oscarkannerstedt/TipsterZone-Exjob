@@ -1,3 +1,5 @@
+@use "../mixins/fonts.scss" as *;
+
 footer {
   max-width: 100%;
   box-sizing: border-box;
@@ -18,6 +20,7 @@ footer {
       color: #e0e0e0;
 
       li {
+        @include inter-regular;
         margin-bottom: 8px;
         font-size: 1rem;
       }
@@ -29,6 +32,7 @@ footer {
     margin-right: 15px;
 
     h2 {
+      @include playfair-bold;
       font-size: 1.5rem;
       margin-bottom: 5px;
       margin-top: 35px;
@@ -36,6 +40,7 @@ footer {
     }
 
     .text-info {
+      @include inter-regular;
       margin-right: 20px;
       margin-top: 0;
       margin-bottom: 40px;
@@ -49,6 +54,7 @@ footer {
     }
 
     .copyright-text {
+      @include inter-regular;
       font-size: 1rem;
       span {
         color: #e0e0e0;

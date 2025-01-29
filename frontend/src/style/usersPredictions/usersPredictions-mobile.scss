@@ -1,3 +1,5 @@
+@use "../mixins/fonts.scss" as *;
+
 .leaderboard-predictions-wrapper {
   min-height: calc(100vh - 60px);
   background-color: #f9f9f9;
@@ -26,6 +28,7 @@
     border-radius: 40px;
 
     h2 {
+      @include playfair-bold;
       font-size: 1.5rem;
       margin: 0;
       color: white;
@@ -46,11 +49,13 @@
     }
 
     p {
+      @include inter-regular;
       margin: 0;
     }
 
     h3,
     h4 {
+      @include playfair-bold;
       margin: 0;
       font-size: 1.3rem;
       color: #b0b0b0;
@@ -64,6 +69,7 @@
   }
 
   .leaderboard-prediction-card {
+    @include inter-regular;
     background-color: #fff;
     border: 1px solid #ddd;
     border-radius: 8px;

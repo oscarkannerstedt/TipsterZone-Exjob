@@ -1,3 +1,5 @@
+@use "../mixins/fonts.scss" as *;
+
 @media (min-width: 1024px) {
   .header {
     height: 100px;
@@ -17,6 +19,7 @@
       margin: 0 50px 0 0;
 
       li {
+        @include inter-regular;
         transition: color 0.2s ease-in;
         padding: 0 10px;
         font-size: 1rem;
