@@ -1,3 +1,5 @@
+@use "../mixins/fonts.scss" as *;
+
 .matches-wrapper {
   min-height: calc(100vh - 60px);
   text-align: center;
@@ -5,11 +7,13 @@
   padding-top: 10px;
 
   h1 {
+    @include playfair-bold;
     margin-top: 10px;
     font-size: 1.7rem;
   }
 
   .league-menu-wrapper {
+    @include inter-regular;
     display: flex;
     gap: 1rem;
     justify-content: center;
@@ -41,6 +45,7 @@
     padding: 20px;
 
     .match-card {
+      @include inter-regular;
       background-color: #fff;
       border: 1px solid #ccc;
       border-radius: 8px;

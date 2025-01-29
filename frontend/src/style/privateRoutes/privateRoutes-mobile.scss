@@ -1,3 +1,5 @@
+@use "../mixins/fonts.scss" as *;
+
 .not-logged-in-message {
   min-height: calc(100vh - 60px);
   background-color: #f9f9f9;
@@ -5,14 +7,17 @@
   padding-top: 10px;
 
   h1 {
-    font-size: 2rem;
+    @include playfair-bold;
+    font-size: 1.7rem;
   }
 
   p {
+    @include inter-regular;
     font-size: 1.1rem;
   }
 
   .button-container {
+    @include inter-regular;
     display: flex;
     justify-content: center;
     gap: 1rem;
