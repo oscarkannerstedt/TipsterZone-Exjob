@@ -13,11 +13,11 @@ TipsterZone is the platform for football enthusiasts who want to predict match o
 
 ## Features
 
-✅ Predict football match outcomes
-✅ Earn points and compete for the top rankings
-✅ View and analyze the top 30 tipsters' predictions
-✅ Stay updated on upcoming matches
-✅ Add reasoning to your predictions for better insights
+✅ Predict football match outcomes  
+✅ Earn points and compete for the top rankings  
+✅ View and analyze the top 30 tipsters' predictions  
+✅ Stay updated on upcoming matches  
+✅ Add reasoning to your predictions for better insights  
 ✅ Challenge friends and compare scores
 
 ## Tech Stack
