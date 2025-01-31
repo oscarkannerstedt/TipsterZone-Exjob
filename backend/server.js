@@ -14,15 +14,6 @@ const app = express();
 
 app.options("*", cors());
 
-// const corsOptions = {
-//   origin:
-//     process.env.NODE_ENV === "production"
-//       ? "https://tipsterzone.onrender.com"
-//       : "http://localhost:5173",
-//   methods: ["GET", "POST", "PUT", "DELETE"],
-//   credentials: true,
-// };
-
 const corsOptions = {
   origin: (origin, callback) => {
     if (!origin) return callback(null, true);
