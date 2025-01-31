@@ -55,6 +55,7 @@ TipsterZone is the platform for football enthusiasts who want to predict match o
 | Predictions              | ![Predictions](./frontend/public/images/predictions.png)                   |
 | Leaderboard              | ![Leaderboard](./frontend/public/images/leaderboard.png)                   |
 | Leaderboard user profile | ![Leaderboard user profile](./frontend/public/images/leaderboard_user.png) |
+| Lighthouse Report        | ![Lighthouse](./frontend/public/images/lighthouse.png)                     |
 
 ## Author
 
