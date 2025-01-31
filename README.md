@@ -59,7 +59,7 @@ TipsterZone is the platform for football enthusiasts who want to predict match o
 
 ## Author
 
-Oscar Kannerstedt 2025
+Oscar Kannerstedt 2025  
 Studying Frontend Developer at Medieinstitutet
 
 - GitHub: https://github.com/oscarkannerstedt
