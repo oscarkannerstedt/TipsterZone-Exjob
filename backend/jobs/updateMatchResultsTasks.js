@@ -1,13 +1,7 @@
 import cron from "node-cron";
 import { updateMatchResultsAndPredicitons } from "../controllers/matchControllers.js";
 
-// Scheduled to run every two hours
-cron.schedule("0 */2 * * *", async () => {
+// Scheduled to run 01.00, 15.00, 18.00 & 21.00 every day
+cron.schedule("0 1,15,18,21 * * *", async () => {
   await updateMatchResultsAndPredicitons();
 });
-
-// Scheduled to run every 10 minutes
-// cron.schedule("*/3 * * * *", async () => {
-//   console.log("Cron job körs");
-//   await updateMatchResultsAndPredicitons();
-// });

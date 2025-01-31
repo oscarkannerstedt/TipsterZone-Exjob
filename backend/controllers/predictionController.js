@@ -3,7 +3,6 @@ import MatchModel from "../models/matchModel.js";
 import matchControllers from "./matchControllers.js";
 import userModel from "../models/userModel.js";
 import predictionModel from "../models/predictionModel.js";
-import mongoose from "mongoose";
 
 //Create a prediction
 export const createPrediction = async (req, res) => {
